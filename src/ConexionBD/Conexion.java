@@ -6,8 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Controlador.Localizaciones_Dpto_DAO;
 import Modelo.Departamento;
 import Modelo.Empleado;
+import Modelo.Localizaciones_Dpto;
 
 public class Conexion {
 	
@@ -75,10 +77,10 @@ public class Conexion {
             pstm = conexion.prepareStatement("INSERT INTO Departamento(NombreDpto, NumeroDpto, DniDirector, FechaIngresoDirector)"
             		+ " VALUES (?,?,?,?)");
             // pstm.setInt(1, categoria.getCategoryID());
-            pstm.setString(1, dep.getNumeroDpto());
-            pstm.setString(2, dep.getApellido1());
-            pstm.setString(3, dep.getApellido1());
-            pstm.setString(4, dep.getDni());
+            pstm.setString(1, dep.getNombreDpto());
+            pstm.setInt(2, dep.getNumeroDpto());
+            pstm.setString(3, dep.getDniDirector());
+            pstm.setString(4, dep.getFechaIngresoDirector());
             
             pstm.executeUpdate();
             return true;
@@ -88,5 +90,21 @@ public class Conexion {
         }
         return false;
     }
+    public static boolean AgregarRegistroLocalizaciones_Dpto(Localizaciones_Dpto loc) {
+        try {
+            pstm = conexion.prepareStatement("INSERT INTO localizaciones_dpto(NumeroDpto,UbicacionDpto)"
+            		+ " VALUES (?,?)");
+            pstm.setInt(1, loc.getNumeroDpto());
+            pstm.setString(2,loc.getLocalizacionDpto());
+            
+            pstm.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+        	System.out.println(ex.toString());
+            System.out.printf("Error al agregar el empleado");
+        }
+        return false;
+    }
+    
 
 }

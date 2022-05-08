@@ -14,6 +14,7 @@ import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Color;
+import javax.swing.JButton;
 
 public class InterfazEmpleado extends JFrame {
 
@@ -47,11 +48,11 @@ public class InterfazEmpleado extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfazEmpleado() {
-		setTitle("Empledos");
+		setTitle("Empleados");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 767, 481);
 		contentPane = new JPanel();
-		contentPane.setBackground(Color.GREEN);
+		contentPane.setBackground(Color.PINK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -171,6 +172,14 @@ public class InterfazEmpleado extends JFrame {
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		
+		JButton btnNewButton = new JButton("Agregar");
+		btnNewButton.setBounds(398, 45, 88, 23);
+		contentPane.add(btnNewButton);
+		
+		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.setBounds(398, 106, 88, 23);
+		contentPane.add(btnEliminar);
 		
 		
 	}
