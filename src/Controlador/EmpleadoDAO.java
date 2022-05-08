@@ -9,7 +9,7 @@ public class EmpleadoDAO {
     public boolean insertarRegistro(Empleado empleado) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.agregarRegistro(empleado);
+        resultado = cn.agregarRegistroEmpleado(empleado);
         return resultado;
     }
 

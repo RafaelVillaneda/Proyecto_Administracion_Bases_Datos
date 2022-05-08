@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Modelo.Departamento;
 import Modelo.Empleado;
 
 public class Conexion {
@@ -48,7 +49,7 @@ public class Conexion {
          return conexion;
     }
     
-    public static boolean agregarRegistro(Empleado empleado) {
+    public static boolean agregarRegistroEmpleado(Empleado empleado) {
         try {
             pstm = conexion.prepareStatement("INSERT INTO Empleado(Nombre, Apellido1, Apellido2, Dni, FechaNac, Direccion, Sexo, Sueldo)"
             		+ " VALUES (?,?,?,?,?,?,?,?)");
@@ -61,6 +62,24 @@ public class Conexion {
             pstm.setString(6, empleado.getDireccion());
             pstm.setString(7, empleado.getSexo());
             pstm.setInt(8, empleado.getSueldo());
+            pstm.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+        	System.out.println(ex.toString());
+            System.out.printf("Error al agregar el empleado");
+        }
+        return false;
+    }
+    public static boolean agregarRegistroDepartamento(Departamento dep) {
+        try {
+            pstm = conexion.prepareStatement("INSERT INTO Departamento(NombreDpto, NumeroDpto, DniDirector, FechaIngresoDirector)"
+            		+ " VALUES (?,?,?,?)");
+            // pstm.setInt(1, categoria.getCategoryID());
+            pstm.setString(1, dep.getNumeroDpto());
+            pstm.setString(2, dep.getApellido1());
+            pstm.setString(3, dep.getApellido1());
+            pstm.setString(4, dep.getDni());
+            
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
