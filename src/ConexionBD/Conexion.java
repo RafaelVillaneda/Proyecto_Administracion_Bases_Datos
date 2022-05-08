@@ -6,6 +6,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import Modelo.Empleado;
+
 public class Conexion {
 	
 
@@ -44,6 +46,28 @@ public class Conexion {
          }
 
          return conexion;
+    }
+    
+    public static boolean agregarRegistro(Empleado empleado) {
+        try {
+            pstm = conexion.prepareStatement("INSERT INTO Empleado(Nombre, Apellido1, Apellido2, Dni, FechaNac, Direccion, Sexo, Sueldo)"
+            		+ " VALUES (?,?,?,?,?,?,?,?)");
+            // pstm.setInt(1, categoria.getCategoryID());
+            pstm.setString(1, empleado.getNombre());
+            pstm.setString(2, empleado.getApellido1());
+            pstm.setString(3, empleado.getApellido1());
+            pstm.setString(4, empleado.getDni());
+            pstm.setString(5, empleado.getFechaNac());
+            pstm.setString(6, empleado.getDireccion());
+            pstm.setString(7, empleado.getSexo());
+            pstm.setInt(8, empleado.getSueldo());
+            pstm.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+        	System.out.println(ex.toString());
+            System.out.printf("Error al agregar el empleado");
+        }
+        return false;
     }
 
 }

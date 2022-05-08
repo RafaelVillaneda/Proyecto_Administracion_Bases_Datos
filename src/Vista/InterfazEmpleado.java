@@ -20,6 +20,8 @@ public class InterfazEmpleado extends JFrame {
 	private JTextField caja_segundo_ap;
 	private JTextField caja_dni;
 	private JTextField caja_sueldo;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -125,6 +127,16 @@ public class InterfazEmpleado extends JFrame {
 		caja_sueldo.setBounds(298, 97, 86, 20);
 		contentPane.add(caja_sueldo);
 		caja_sueldo.setColumns(10);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(298, 135, 86, 20);
+		contentPane.add(textField);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(298, 172, 86, 20);
+		contentPane.add(textField_1);
 		
 		
 	}
