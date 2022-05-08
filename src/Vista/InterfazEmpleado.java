@@ -6,6 +6,10 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controlador.EmpleadoDAO;
+import Modelo.Empleado;
+
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
@@ -15,8 +19,11 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class InterfazEmpleado extends JFrame {
+	
 
 	private JPanel contentPane;
 	private JFormattedTextField caja_nombre;
@@ -24,9 +31,10 @@ public class InterfazEmpleado extends JFrame {
 	private JTextField caja_segundo_ap;
 	private JTextField caja_dni;
 	private JTextField caja_sueldo;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField caja_superDni;
+	private JTextField caja_dno;
 	private JTable table;
+	private EmpleadoDAO dao=new EmpleadoDAO();
 
 	/**
 	 * Launch the application.
@@ -50,12 +58,13 @@ public class InterfazEmpleado extends JFrame {
 	public InterfazEmpleado() {
 		setTitle("Empleados");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 767, 481);
+		setBounds(100, 100, 767, 526);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.PINK);
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+		
 		
 		JLabel lblNewLabel = new JLabel("Accion a realizar:");
 		lblNewLabel.setBounds(10, 11, 107, 14);
@@ -124,25 +133,25 @@ public class InterfazEmpleado extends JFrame {
 		caja_dni.setBounds(117, 169, 86, 20);
 		contentPane.add(caja_dni);
 		
-		JComboBox comboBox_1 = new JComboBox();
-		comboBox_1.setModel(new DefaultComboBoxModel(new String[] {"H", "M"}));
-		comboBox_1.setBounds(299, 61, 46, 22);
-		contentPane.add(comboBox_1);
+		JComboBox combo_sexo = new JComboBox();
+		combo_sexo.setModel(new DefaultComboBoxModel(new String[] {"H", "M"}));
+		combo_sexo.setBounds(299, 61, 46, 22);
+		contentPane.add(combo_sexo);
 		
 		caja_sueldo = new JTextField();
 		caja_sueldo.setBounds(298, 97, 86, 20);
 		contentPane.add(caja_sueldo);
 		caja_sueldo.setColumns(10);
 		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(298, 135, 86, 20);
-		contentPane.add(textField);
+		caja_superDni = new JTextField();
+		caja_superDni.setColumns(10);
+		caja_superDni.setBounds(298, 135, 86, 20);
+		contentPane.add(caja_superDni);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(298, 172, 86, 20);
-		contentPane.add(textField_1);
+		caja_dno = new JTextField();
+		caja_dno.setColumns(10);
+		caja_dno.setBounds(298, 172, 86, 20);
+		contentPane.add(caja_dno);
 		
 		JLabel lblNewLabel_5 = new JLabel("Fecha de nacimiento");
 		lblNewLabel_5.setBounds(10, 215, 154, 14);
@@ -167,19 +176,40 @@ public class InterfazEmpleado extends JFrame {
 		contentPane.add(combo_años);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 258, 477, 173);
+		scrollPane.setBounds(10, 303, 477, 173);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
 		
+		JFormattedTextField caja_direccion = new JFormattedTextField();
+		caja_direccion.setColumns(10);
+		caja_direccion.setBounds(117, 250, 86, 20);
+		contentPane.add(caja_direccion);
+		
 		JButton btnNewButton = new JButton("Agregar");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String fecha ="";
+				fecha+=combo_años.getSelectedItem().toString();
+				fecha+=combo_meses.getSelectedItem().toString();
+				fecha+=combo_dias.getSelectedItem().toString();
+				Empleado empleado=new Empleado(caja_nombre.getText(), cajaPrimerAp.getText(), caja_segundo_ap.getText(), caja_dni.getText(), fecha, caja_direccion.getText(), combo_sexo.getSelectedItem().toString(), Integer.parseInt(caja_sueldo.getText()), caja_superDni.getText(), caja_dno.getText());
+				dao.insertarRegistro(empleado);
+			}
+		});
 		btnNewButton.setBounds(398, 45, 88, 23);
 		contentPane.add(btnNewButton);
 		
 		JButton btnEliminar = new JButton("Eliminar");
 		btnEliminar.setBounds(398, 106, 88, 23);
 		contentPane.add(btnEliminar);
+		
+		JLabel lblNewLabel_1_3 = new JLabel("Direccion:");
+		lblNewLabel_1_3.setBounds(10, 253, 73, 14);
+		contentPane.add(lblNewLabel_1_3);
+		
+		
 		
 		
 	}

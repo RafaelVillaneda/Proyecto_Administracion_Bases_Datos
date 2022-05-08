@@ -16,7 +16,7 @@ import java.sql.SQLException;
 public class main {
 
 	public static void main(String[] args) {
-		//Connection a = Conexion.getConexion();
+		Connection a = Conexion.getConexion();
 		String base="";
 		
 		try {
