@@ -9,6 +9,7 @@ import javax.swing.border.EmptyBorder;
 
 import Controlador.EmpleadoDAO;
 import Modelo.Empleado;
+import vista.ResultSetTableModel;
 
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -20,6 +21,7 @@ import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 
 public class InterfazEmpleado extends JFrame {
@@ -176,11 +178,30 @@ public class InterfazEmpleado extends JFrame {
 		contentPane.add(combo_años);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 303, 477, 173);
+		scrollPane.setBounds(10, 303, 731, 173);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
 		scrollPane.setViewportView(table);
+		
+		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+		String url = "jdbc:sqlserver://localhost:1433;databaseName=Empresa;"
+        		+ "user=Lucy;"
+        		+ "password=gulf1;"
+        		+ "encrypt=true;trustServerCertificate=true;";
+		
+		String consulta = "SELECT * FROM Empresa.dbo.Empleado";
+		ResultSetTableModel modeloDatos=null;
+		try {
+			modeloDatos = new ResultSetTableModel(controlador, url, consulta);
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		table.setModel(modeloDatos);
 		
 		JFormattedTextField caja_direccion = new JFormattedTextField();
 		caja_direccion.setColumns(10);
@@ -188,6 +209,7 @@ public class InterfazEmpleado extends JFrame {
 		contentPane.add(caja_direccion);
 		
 		JButton btnNewButton = new JButton("Agregar");
+		btnNewButton.setBackground(new Color(238, 232, 170));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				String fecha ="";
@@ -202,6 +224,7 @@ public class InterfazEmpleado extends JFrame {
 		contentPane.add(btnNewButton);
 		
 		JButton btnEliminar = new JButton("Eliminar");
+		btnEliminar.setBackground(new Color(238, 232, 170));
 		btnEliminar.setBounds(398, 106, 88, 23);
 		contentPane.add(btnEliminar);
 		
