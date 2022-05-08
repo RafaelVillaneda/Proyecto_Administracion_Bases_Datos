@@ -18,7 +18,7 @@ public class Conexion {
 
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
 
-            String URL = "jdbc:sqlserver://localhost:1433;databaseName=pruebaconexion;"
+            String URL = "jdbc:sqlserver://localhost:1433;databaseName=Empresa;"
             		+ "user=Lucy;"
             		+ "password=gulf1;"
             		+ "encrypt=true;trustServerCertificate=true;";
