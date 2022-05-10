@@ -23,6 +23,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class InterfazEmpleado extends JFrame {
 	
@@ -201,6 +203,15 @@ public class InterfazEmpleado extends JFrame {
 		contentPane.add(lblNewLabel_4);
 		
 		caja_nombre = new JTextField();
+		caja_nombre.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isLetter(car)|| Character.isSpace(car)){}else{
+				e.consume();
+				}
+			}
+		});
 		caja_nombre.setEnabled(false);
 		caja_nombre.setBounds(117, 59, 86, 20);
 		contentPane.add(caja_nombre);
@@ -209,18 +220,45 @@ public class InterfazEmpleado extends JFrame {
 		
 		
 		cajaPrimerAp = new JTextField();
+		cajaPrimerAp.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isLetter(car)|| Character.isSpace(car)){}else{
+				e.consume();
+				}
+			}
+		});
 		cajaPrimerAp.setEnabled(false);
 		cajaPrimerAp.setColumns(10);
 		cajaPrimerAp.setBounds(117, 94, 86, 20);
 		contentPane.add(cajaPrimerAp);
 		
 		caja_segundo_ap = new JTextField();
+		caja_segundo_ap.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isLetter(car)|| Character.isSpace(car)){}else{
+				e.consume();
+				}
+			}
+		});
 		caja_segundo_ap.setEnabled(false);
 		caja_segundo_ap.setColumns(10);
 		caja_segundo_ap.setBounds(117, 132, 86, 20);
 		contentPane.add(caja_segundo_ap);
 		
 		caja_dni = new JTextField();
+		caja_dni.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isDigit(car)){}else{
+				e.consume();
+				}
+			}
+		});
 		caja_dni.setEnabled(false);
 		caja_dni.setColumns(10);
 		caja_dni.setBounds(117, 169, 86, 20);
@@ -233,18 +271,45 @@ public class InterfazEmpleado extends JFrame {
 		contentPane.add(combo_sexo);
 		
 		caja_sueldo = new JTextField();
+		caja_sueldo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isDigit(car)){}else{
+				e.consume();
+				}
+			}
+		});
 		caja_sueldo.setEnabled(false);
 		caja_sueldo.setBounds(298, 97, 86, 20);
 		contentPane.add(caja_sueldo);
 		caja_sueldo.setColumns(10);
 		
 		caja_superDni = new JTextField();
+		caja_superDni.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isDigit(car)){}else{
+				e.consume();
+				}
+			}
+		});
 		caja_superDni.setEnabled(false);
 		caja_superDni.setColumns(10);
 		caja_superDni.setBounds(298, 135, 86, 20);
 		contentPane.add(caja_superDni);
 		
 		caja_dno = new JTextField();
+		caja_dno.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isDigit(car) && caja_dno.getText().length()<=0){}else{
+				e.consume();
+				}
+			}
+		});
 		caja_dno.setEnabled(false);
 		caja_dno.setColumns(10);
 		caja_dno.setBounds(298, 172, 86, 20);
@@ -303,6 +368,15 @@ public class InterfazEmpleado extends JFrame {
 		table.setModel(modeloDatos);
 		
 		caja_direccion = new JFormattedTextField();
+		caja_direccion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isLetter(car)||Character.isSpace(car)||car=='#'||Character.isDigit(car)){}else{
+				e.consume();
+				}
+			}
+		});
 		caja_direccion.setEnabled(false);
 		caja_direccion.setColumns(10);
 		caja_direccion.setBounds(117, 250, 228, 20);
