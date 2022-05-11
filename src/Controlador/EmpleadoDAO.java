@@ -22,6 +22,15 @@ public class EmpleadoDAO {
 		return resultado;
         
     }
+    public boolean eliminarRegistro(Empleado empleado) {
+    	con.getConexion();
+        boolean resultado = false;
+        if(buscarRegistroSuperDNI(empleado.getDni())!=null) {
+        resultado=con.elimiarRegistro("DELETE FROM Empresa.dbo.Empleado WHERE Dni='"+empleado.getDni()+"'");
+    	return resultado;
+        }
+        return false;
+    }
   
     public Empleado buscarRegistroSuperDNI(String dni) {
     	Empleado u1=new Empleado();
@@ -42,7 +51,7 @@ public class EmpleadoDAO {
 			u1.setDno(rs.getString(9));
 			return u1;
 			}else {
-				JOptionPane.showMessageDialog(null,"No existe ese 'Super Dni' verificalo");
+				JOptionPane.showMessageDialog(null,"No existe ese Dni en el campo Super Dni verificalo");
 				return null;
 			}
 		} catch (SQLException e) {

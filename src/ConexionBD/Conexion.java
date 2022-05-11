@@ -50,6 +50,18 @@ public class Conexion {
 
          return conexion;
     }
+    public boolean elimiarRegistro(String sql) {
+    	try {
+			pstm = conexion.prepareStatement(sql);
+			return true;
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+			return false;
+		}
+        
+    	
+    }
     
     public static boolean agregarRegistroEmpleado(Empleado empleado) {
         try {

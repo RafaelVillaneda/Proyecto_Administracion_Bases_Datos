@@ -92,6 +92,7 @@ public class InterfazEmpleado extends JFrame {
 		comboBox.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(comboBox.getSelectedIndex()==0) {
+					actualizarTabla("SELECT * FROM Empresa.dbo.Empleado");
 					caja_nombre.setEnabled(false);
 					cajaPrimerAp.setEnabled(false);
 					caja_segundo_ap.setEnabled(false);
@@ -108,6 +109,7 @@ public class InterfazEmpleado extends JFrame {
 					btn_Agregar.setEnabled(false);
 					btnEliminar.setEnabled(false);
 				}else if(comboBox.getSelectedIndex()==1) {
+					actualizarTabla("SELECT * FROM Empresa.dbo.Empleado");
 					table.setEnabled(true);
 					caja_nombre.setEnabled(true);
 					cajaPrimerAp.setEnabled(true);
@@ -126,6 +128,7 @@ public class InterfazEmpleado extends JFrame {
 					
 				}else if(comboBox.getSelectedIndex()==2) {
 					btn_Agregar.setEnabled(false);
+					btnEliminar.setEnabled(true);
 					caja_nombre.setEnabled(true);
 					cajaPrimerAp.setEnabled(true);
 					caja_segundo_ap.setEnabled(true);
@@ -549,6 +552,25 @@ public class InterfazEmpleado extends JFrame {
 		contentPane.add(btn_Agregar);
 		
 		btnEliminar = new JButton("Eliminar");
+		btnEliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(verificarCajasVavias()==false) {
+					String fecha ="";
+					fecha+=combo_años.getSelectedItem().toString()+"-";
+					fecha+=combo_meses.getSelectedItem().toString()+"-";
+					fecha+=combo_dias.getSelectedItem().toString();
+					Empleado empleado=new Empleado(caja_nombre.getText(), cajaPrimerAp.getText(), 
+							caja_segundo_ap.getText(), caja_dni.getText(), fecha, caja_direccion.getText(), combo_sexo.getSelectedItem().toString(), 
+							Integer.parseInt(caja_sueldo.getText()), caja_superDni.getText(), caja_dno.getText());
+					if(dao.eliminarRegistro(empleado)) {
+						JOptionPane.showMessageDialog(null,"Empleado eliminado con exito");
+					}else {
+						JOptionPane.showMessageDialog(null,"El Empleado NO fue eliminado");
+					}
+					
+				}//IF
+			}
+		});
 		btnEliminar.setEnabled(false);
 		btnEliminar.setBackground(new Color(238, 232, 170));
 		btnEliminar.setBounds(398, 106, 88, 23);
