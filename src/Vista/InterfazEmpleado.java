@@ -24,9 +24,13 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.lang.reflect.Array;
 
 public class InterfazEmpleado extends JFrame {
 	
@@ -104,6 +108,7 @@ public class InterfazEmpleado extends JFrame {
 					btn_Agregar.setEnabled(false);
 					btnEliminar.setEnabled(false);
 				}else if(comboBox.getSelectedIndex()==1) {
+					table.setEnabled(true);
 					caja_nombre.setEnabled(true);
 					cajaPrimerAp.setEnabled(true);
 					caja_segundo_ap.setEnabled(true);
@@ -341,12 +346,41 @@ public class InterfazEmpleado extends JFrame {
 		combo_años.setToolTipText("Elige los dos ultimos n\u00FAmero de tu a\u00F1o de nacimiento");
 		combo_años.setBounds(271, 207, 74, 22);
 		contentPane.add(combo_años);
+		scrollPane.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				
+			}
+		});
 		
 		
 		scrollPane.setBounds(10, 303, 731, 173);
 		contentPane.add(scrollPane);
 		
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				caja_nombre.setText("" + table.getValueAt(table.getSelectedRow(), 0));
+				cajaPrimerAp.setText("" + table.getValueAt(table.getSelectedRow(), 1));
+				caja_segundo_ap.setText("" + table.getValueAt(table.getSelectedRow(), 2));
+				caja_dni.setText("" + table.getValueAt(table.getSelectedRow(), 3));
+				String fecha[]=("" + table.getValueAt(table.getSelectedRow(), 4)).split("-");
+				System.out.println(Arrays.toString(fecha));
+				combo_dias.setSelectedItem(""+fecha[2]);
+				combo_meses.setSelectedItem(""+fecha[1]);
+				combo_años.setSelectedItem(""+fecha[0]);
+				
+				caja_direccion.setText("" + table.getValueAt(table.getSelectedRow(), 5));
+				
+				
+				caja_sueldo.setText("" + table.getValueAt(table.getSelectedRow(), 7));
+				caja_superDni.setText("" + table.getValueAt(table.getSelectedRow(), 8));
+				caja_dno.setText("" + table.getValueAt(table.getSelectedRow(), 9));
+				
+				
+			}
+		});
 		table.setEnabled(false);
 		scrollPane.setViewportView(table);
 		
@@ -458,9 +492,5 @@ public class InterfazEmpleado extends JFrame {
 	
 		return false;
 	}//Verificar
-	public void obtenerRegistroTabla() {
-		
-		caja_nombre.setText("" + table.getValueAt(table.getSelectedRow(), 0));
-		
-	}
+	
 }
