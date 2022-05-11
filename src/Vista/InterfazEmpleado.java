@@ -212,13 +212,29 @@ public class InterfazEmpleado extends JFrame {
 		caja_nombre = new JTextField();
 		caja_nombre.addKeyListener(new KeyAdapter() {
 			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isLetter(car)|| Character.isSpace(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(comboBox.getSelectedIndex()==2||comboBox.getSelectedIndex()==3 || comboBox.getSelectedIndex()==4) {
+						//System.out.println("SELECT * FROM Empresa.dbo.Empleado WHERE Nombre LIKE '"+caja_nombre.getText()+"%'");
+						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado WHERE Nombre LIKE '"+caja_nombre.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+				
+			}
+			@Override
 			public void keyTyped(KeyEvent e) {
 				char car = e.getKeyChar();
 				if(Character.isLetter(car)|| Character.isSpace(car)){}else{
 				e.consume();
 				}
 			}
+			
 		});
+		
 		caja_nombre.setEnabled(false);
 		caja_nombre.setBounds(117, 59, 86, 20);
 		contentPane.add(caja_nombre);
@@ -229,12 +245,27 @@ public class InterfazEmpleado extends JFrame {
 		cajaPrimerAp = new JTextField();
 		cajaPrimerAp.addKeyListener(new KeyAdapter() {
 			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isLetter(car)|| Character.isSpace(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(comboBox.getSelectedIndex()==2||comboBox.getSelectedIndex()==3 || comboBox.getSelectedIndex()==4) {
+						//System.out.println("SELECT * FROM Empresa.dbo.Empleado WHERE Nombre LIKE '"+caja_nombre.getText()+"%'");
+						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado WHERE Apellido1 LIKE '"+cajaPrimerAp.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+				
+			}
+			@Override
 			public void keyTyped(KeyEvent e) {
 				char car = e.getKeyChar();
 				if(Character.isLetter(car)|| Character.isSpace(car)){}else{
 				e.consume();
 				}
 			}
+			
 		});
 		cajaPrimerAp.setEnabled(false);
 		cajaPrimerAp.setColumns(10);
@@ -244,12 +275,26 @@ public class InterfazEmpleado extends JFrame {
 		caja_segundo_ap = new JTextField();
 		caja_segundo_ap.addKeyListener(new KeyAdapter() {
 			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isLetter(car)|| Character.isSpace(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(comboBox.getSelectedIndex()==2||comboBox.getSelectedIndex()==3 || comboBox.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado WHERE Apellido2 LIKE '"+caja_segundo_ap.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+				
+			}
+			@Override
 			public void keyTyped(KeyEvent e) {
 				char car = e.getKeyChar();
 				if(Character.isLetter(car)|| Character.isSpace(car)){}else{
 				e.consume();
 				}
 			}
+			
 		});
 		caja_segundo_ap.setEnabled(false);
 		caja_segundo_ap.setColumns(10);
@@ -259,12 +304,27 @@ public class InterfazEmpleado extends JFrame {
 		caja_dni = new JTextField();
 		caja_dni.addKeyListener(new KeyAdapter() {
 			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isDigit(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(comboBox.getSelectedIndex()==2||comboBox.getSelectedIndex()==3 || comboBox.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado WHERE Dni LIKE '"+caja_dni.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+				
+			}
+			@Override
 			public void keyTyped(KeyEvent e) {
 				char car = e.getKeyChar();
 				if(Character.isDigit(car)){}else{
 				e.consume();
 				}
 			}
+			
+			
 		});
 		caja_dni.setEnabled(false);
 		caja_dni.setColumns(10);
@@ -279,6 +339,19 @@ public class InterfazEmpleado extends JFrame {
 		
 		caja_sueldo = new JTextField();
 		caja_sueldo.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isDigit(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(comboBox.getSelectedIndex()==2||comboBox.getSelectedIndex()==3 || comboBox.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado WHERE Sueldo LIKE '"+caja_sueldo.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+				
+			}
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char car = e.getKeyChar();
@@ -295,6 +368,19 @@ public class InterfazEmpleado extends JFrame {
 		caja_superDni = new JTextField();
 		caja_superDni.addKeyListener(new KeyAdapter() {
 			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isDigit(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(comboBox.getSelectedIndex()==2||comboBox.getSelectedIndex()==3 || comboBox.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado WHERE SuperDni LIKE '"+caja_superDni.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+				
+			}
+			@Override
 			public void keyTyped(KeyEvent e) {
 				char car = e.getKeyChar();
 				if(Character.isDigit(car)){}else{
@@ -309,6 +395,19 @@ public class InterfazEmpleado extends JFrame {
 		
 		caja_dno = new JTextField();
 		caja_dno.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isDigit(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(comboBox.getSelectedIndex()==2||comboBox.getSelectedIndex()==3 || comboBox.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado WHERE Dno LIKE '"+caja_dno.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+				
+			}
 			@Override
 			public void keyTyped(KeyEvent e) {
 				char car = e.getKeyChar();
