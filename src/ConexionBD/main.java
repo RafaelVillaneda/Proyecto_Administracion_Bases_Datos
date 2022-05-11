@@ -8,6 +8,7 @@ import Controlador.Localizaciones_Dpto_DAO;
 import Modelo.Departamento;
 import Modelo.Empleado;
 import Modelo.Localizaciones_Dpto;
+import Vista.InterfazEmpleado;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -17,6 +18,7 @@ public class main {
 
 	public static void main(String[] args) {
 		Connection a = Conexion.getConexion();
+		
 		String base="";
 		
 		try {
@@ -24,18 +26,20 @@ public class main {
 			String consulta="SELECT * FROM Empresa.dbo.Empleado";
 			ResultSet resultado=sql.executeQuery(consulta);
 			while(resultado.next()) {
-				base+=resultado.getString(1)+"-";
+				System.out.println(base);
+				base+=resultado.getString(1)+" "+resultado.getString(2)+"-";
 			}
 			System.out.println(base);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		/*
-		Empleado em=new Empleado("Rafa", "Villaneda", "De la torre", "026987264", "2022-05-08", "18 de julio", "M",1200, "333445555", "1");
+		
+		Empleado em=new Empleado("Ricardo", "Saldivar", "Quezada", "888", "2022-05-08", "18 de julio", "M",1200, "123456789", "1");
 		EmpleadoDAO dao=new EmpleadoDAO();
 		dao.insertarRegistro(em);
-		*/
+		new InterfazEmpleado().setVisible(true);
+		
 		base="";
 		try {
 			Statement sql=Conexion.getConexion().createStatement();

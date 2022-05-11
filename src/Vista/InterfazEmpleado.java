@@ -7,6 +7,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
+import ConexionBD.Conexion;
 import Controlador.EmpleadoDAO;
 import Modelo.Empleado;
 
@@ -21,6 +22,7 @@ import javax.swing.JTable;
 import java.awt.Color;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -390,11 +392,24 @@ public class InterfazEmpleado extends JFrame {
 				
 				if(verificarCajasVavias()==false) {
 				String fecha ="";
-				fecha+=combo_años.getSelectedItem().toString();
-				fecha+=combo_meses.getSelectedItem().toString();
+				fecha+=combo_años.getSelectedItem().toString()+"-";
+				fecha+=combo_meses.getSelectedItem().toString()+"-";
 				fecha+=combo_dias.getSelectedItem().toString();
-				Empleado empleado=new Empleado(caja_nombre.getText(), cajaPrimerAp.getText(), caja_segundo_ap.getText(), caja_dni.getText(), fecha, caja_direccion.getText(), combo_sexo.getSelectedItem().toString(), Integer.parseInt(caja_sueldo.getText()), caja_superDni.getText(), caja_dno.getText());
-				dao.insertarRegistro(empleado);}
+				Empleado empleado=new Empleado(caja_nombre.getText(), cajaPrimerAp.getText(), 
+					caja_segundo_ap.getText(), caja_dni.getText(), fecha, caja_direccion.getText(), combo_sexo.getSelectedItem().toString(), 
+					Integer.parseInt(caja_sueldo.getText()), caja_superDni.getText(), caja_dno.getText());
+				if(dao.buscarRegistroSuperDNI(caja_superDni.getText())!=null) {
+					boolean agregado=dao.insertarRegistro(empleado);
+					if(agregado) {
+						JOptionPane.showMessageDialog(null,"Registro Agregado correctamente");
+						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado");
+					}else {
+						JOptionPane.showMessageDialog(null,"Registro No Agregado");
+					}
+				}
+				
+				
+				}//if
 			}
 		});
 		btn_Agregar.setBounds(398, 45, 88, 23);
@@ -433,6 +448,7 @@ public class InterfazEmpleado extends JFrame {
 		}
 		table.setModel(modeloDatos);
 	}//Actualozar Tabla
+	
 	public boolean verificarCajasVavias() {
 		if(caja_nombre.getText().isEmpty()||cajaPrimerAp.getText().isEmpty()||caja_segundo_ap.getText().isEmpty()||caja_dni.getText().isEmpty()||caja_sueldo.getText().isEmpty()||caja_dno.getText().isEmpty()) {
 			JOptionPane.showMessageDialog(null,"Hay casillas vacias!");
@@ -440,6 +456,11 @@ public class InterfazEmpleado extends JFrame {
 		}
 		
 	
-		return true;
+		return false;
 	}//Verificar
+	public void obtenerRegistroTabla() {
+		
+		caja_nombre.setText("" + table.getValueAt(table.getSelectedRow(), 0));
+		
+	}
 }

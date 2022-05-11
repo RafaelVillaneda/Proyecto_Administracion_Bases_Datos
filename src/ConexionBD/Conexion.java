@@ -29,7 +29,7 @@ public class Conexion {
             		+ "encrypt=true;trustServerCertificate=true;";
             try {
 				conexion= DriverManager.getConnection(URL);
-				System.out.println("--Conexion efectuada correctamente--");
+				//System.out.println("--Conexion efectuada correctamente--");
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -53,22 +53,24 @@ public class Conexion {
     
     public static boolean agregarRegistroEmpleado(Empleado empleado) {
         try {
-            pstm = conexion.prepareStatement("INSERT INTO Empleado(Nombre, Apellido1, Apellido2, Dni, FechaNac, Direccion, Sexo, Sueldo)"
-            		+ " VALUES (?,?,?,?,?,?,?,?)");
-            // pstm.setInt(1, categoria.getCategoryID());
+            pstm = conexion.prepareStatement("INSERT \"Empleado\" (\"Nombre\",\"Apellido1\",\"Apellido2\",\"Dni\",\"FechaNac\",\"Direccion\",\"Sexo\",\"Sueldo\","
+            		+ "\"SuperDni\",\"Dno\")"
+            		+ " VALUES (?,?,?,?,?,?,?,?,?,?)");
             pstm.setString(1, empleado.getNombre());
             pstm.setString(2, empleado.getApellido1());
-            pstm.setString(3, empleado.getApellido1());
+            pstm.setString(3, empleado.getApellido2());
             pstm.setString(4, empleado.getDni());
             pstm.setString(5, empleado.getFechaNac());
             pstm.setString(6, empleado.getDireccion());
             pstm.setString(7, empleado.getSexo());
             pstm.setInt(8, empleado.getSueldo());
+            pstm.setString(9, empleado.getSuperdni());
+            pstm.setString(10, empleado.getDno());
+            
             pstm.executeUpdate();
             return true;
         } catch (Exception ex) {
-        	System.out.println(ex.toString());
-            System.out.printf("Error al agregar el empleado");
+        	ex.printStackTrace();
         }
         return false;
     }
@@ -105,6 +107,18 @@ public class Conexion {
         }
         return false;
     }
+    
+    public static  ResultSet ConsultarRegistro(String consulta){
+		
+		 try {
+			    pstm = conexion.prepareStatement(consulta);
+		        return pstm.executeQuery();
+		        
+		 } catch (Exception ex) {
+		        System.out.println(ex.toString());
+		 }
+		 return null;
+	}
     
 
 }

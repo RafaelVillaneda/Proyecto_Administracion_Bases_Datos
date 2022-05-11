@@ -11,6 +11,7 @@ public class Empleado {
 	private int sueldo;
 	private String superdni;
 	private String dno;
+	public Empleado() {}
 	public Empleado(String nombre, String apellido1, String apellido2, String dni, String fechaNac, String direccion,
 			String sexo, int sueldo, String superdni, String dno) {
 		super();
