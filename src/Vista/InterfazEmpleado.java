@@ -57,6 +57,7 @@ public class InterfazEmpleado extends JFrame {
 	private JTable table;
 	private JScrollPane scrollPane = new JScrollPane();
 	private EmpleadoDAO dao=new EmpleadoDAO();
+	private JButton btnModificar;
 
 	/**
 	 * Launch the application.
@@ -112,6 +113,7 @@ public class InterfazEmpleado extends JFrame {
 					combo_sexo.setEnabled(false);
 					btn_Agregar.setEnabled(false);
 					btnEliminar.setEnabled(false);
+					btnModificar.setEnabled(false);
 				}else if(comboBox.getSelectedIndex()==1) {
 					actualizarTabla("SELECT * FROM Empresa.dbo.Empleado");
 					table.setEnabled(true);
@@ -123,6 +125,8 @@ public class InterfazEmpleado extends JFrame {
 					caja_superDni.setEnabled(true);
 					caja_dno.setEnabled(true);
 					btn_Agregar.setEnabled(true);
+					btnModificar.setEnabled(false);
+					btnEliminar.setEnabled(false);
 					caja_direccion.setEnabled(true);
 					comboBox.setEnabled(true);
 					combo_dias.setEnabled(true);
@@ -133,6 +137,7 @@ public class InterfazEmpleado extends JFrame {
 				}else if(comboBox.getSelectedIndex()==2) {
 					btn_Agregar.setEnabled(false);
 					btnEliminar.setEnabled(true);
+					btnModificar.setEnabled(false);
 					caja_nombre.setEnabled(true);
 					cajaPrimerAp.setEnabled(true);
 					caja_segundo_ap.setEnabled(true);
@@ -148,6 +153,9 @@ public class InterfazEmpleado extends JFrame {
 					combo_años.setEnabled(true);
 					combo_sexo.setEnabled(true);
 				}else if(comboBox.getSelectedIndex()==3) {
+					btn_Agregar.setEnabled(false);
+					btnEliminar.setEnabled(false);
+					btnModificar.setEnabled(true);
 					caja_nombre.setEnabled(true);
 					cajaPrimerAp.setEnabled(true);
 					caja_segundo_ap.setEnabled(true);
@@ -163,6 +171,9 @@ public class InterfazEmpleado extends JFrame {
 					combo_años.setEnabled(true);
 					combo_sexo.setEnabled(true);
 				}else if(comboBox.getSelectedIndex()==4) {
+					btn_Agregar.setEnabled(false);
+					btnEliminar.setEnabled(false);
+					btnModificar.setEnabled(false);
 					caja_nombre.setEnabled(true);
 					cajaPrimerAp.setEnabled(true);
 					caja_segundo_ap.setEnabled(true);
@@ -609,8 +620,31 @@ public class InterfazEmpleado extends JFrame {
 			}
 		});
 		btn_limpiar.setBackground(new Color(238, 232, 170));
-		btn_limpiar.setBounds(398, 171, 88, 23);
+		btn_limpiar.setBounds(398, 249, 88, 23);
 		contentPane.add(btn_limpiar);
+		
+		btnModificar = new JButton("Modificar");
+		btnModificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				String fecha ="";
+				fecha+=combo_años.getSelectedItem().toString()+"-";
+				fecha+=combo_meses.getSelectedItem().toString()+"-";
+				fecha+=combo_dias.getSelectedItem().toString();
+				Empleado empleado=new Empleado(caja_nombre.getText(), cajaPrimerAp.getText(), 
+						caja_segundo_ap.getText(), caja_dni.getText(), fecha, caja_direccion.getText(), combo_sexo.getSelectedItem().toString(), 
+						Integer.parseInt(caja_sueldo.getText()), caja_superDni.getText(), caja_dno.getText());
+				if(dao.ActualizarRegistro(empleado)) {
+					JOptionPane.showMessageDialog(null,"Los datos fueron actualizados");
+					actualizarTabla("SELECT * FROM Empresa.dbo.Empleado");
+				}else {
+					JOptionPane.showMessageDialog(null,"No se pudo actualizar");
+				}
+			}
+		});
+		btnModificar.setEnabled(false);
+		btnModificar.setBackground(new Color(238, 232, 170));
+		btnModificar.setBounds(398, 171, 88, 23);
+		contentPane.add(btnModificar);
 		
 		
 		

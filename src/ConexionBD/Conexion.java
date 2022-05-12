@@ -88,6 +88,36 @@ public class Conexion {
         }
         return false;
     }
+    public static boolean actualizarRegistroEmpleado(Empleado emp) {
+        try {
+            pstm = conexion
+                    .prepareStatement("UPDATE Empleado SET Nombre = ?, Apellido1 = ?,Apellido2=?,"
+                    		+ "Dni=?,FechaNac=?,Direccion=?, Sexo=?, Sueldo=?,SuperDni=?,"
+                    		+ "Dno=? WHERE Dni = ? AND SuperDni=?");
+            pstm.setString(1, emp.getNombre());
+            pstm.setString(2, emp.getApellido1());
+            pstm.setString(3, emp.getApellido2());
+            pstm.setString(4, emp.getDni());
+            pstm.setString(5, emp.getFechaNac());
+            pstm.setString(6, emp.getDireccion());
+            pstm.setString(7, emp.getSexo());
+            pstm.setInt(8, emp.getSueldo());
+            pstm.setString(9, emp.getSuperdni());
+            pstm.setString(10, emp.getDno());
+            
+            pstm.setString(11, emp.getDni());
+            pstm.setString(12, emp.getSuperdni());
+            
+            
+            pstm.executeUpdate();
+            return true;
+        } catch (Exception ex) {
+        	ex.printStackTrace();
+            System.out.printf("Error al modificar el empleado");
+        }
+        return false;
+
+    }
     public static boolean agregarRegistroDepartamento(Departamento dep) {
         try {
             pstm = conexion.prepareStatement("INSERT INTO Departamento(NombreDpto, NumeroDpto, DniDirector, FechaIngresoDirector)"

@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 import ConexionBD.Conexion;
 import Modelo.Empleado;
 
+
 public class EmpleadoDAO {
 	Conexion con =new Conexion(0);
 
@@ -26,9 +27,19 @@ public class EmpleadoDAO {
     	con.getConexion();
         boolean resultado = false;
         System.out.println(obj);
-        resultado=con.elimiarRegistro("DELETE FROM Empresa.dbo.Empleado WHERE Dni='"+obj.getDni()+"'");
+        resultado=con.elimiarRegistro("DELETE FROM Empresa.dbo.Empleado WHERE Dni='"+obj.getDni()+"' AND SuperDni='"+obj.getSuperdni()+"'");
     	return resultado;
     }
+    public boolean ActualizarRegistro(Empleado empleado) {
+    	con.getConexion();
+        boolean resultado = false;
+        //System.out.println("Insersion?--> "+Conexion.agregarRegistroEmpleado(empleado));
+        resultado = con.actualizarRegistroEmpleado(empleado);
+        
+		return resultado;
+        
+    }
+    
     
     public Empleado buscarRegistroSuperDNI(String dni) {
     	Empleado u1=new Empleado();
