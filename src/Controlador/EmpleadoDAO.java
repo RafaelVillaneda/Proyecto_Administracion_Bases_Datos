@@ -22,16 +22,14 @@ public class EmpleadoDAO {
 		return resultado;
         
     }
-    public boolean eliminarRegistro(Empleado empleado) {
+    public boolean eliminarRegistro(Empleado obj) {
     	con.getConexion();
         boolean resultado = false;
-        if(buscarRegistroSuperDNI(empleado.getDni())!=null) {
-        resultado=con.elimiarRegistro("DELETE FROM Empresa.dbo.Empleado WHERE Dni='"+empleado.getDni()+"'");
+        System.out.println(obj);
+        resultado=con.elimiarRegistro("DELETE FROM Empresa.dbo.Empleado WHERE Dni='"+obj.getDni()+"'");
     	return resultado;
-        }
-        return false;
     }
-  
+    
     public Empleado buscarRegistroSuperDNI(String dni) {
     	Empleado u1=new Empleado();
 		String sql="SELECT * FROM Empresa.dbo.Empleado WHERE Dni ='"+dni+"';";
@@ -60,6 +58,7 @@ public class EmpleadoDAO {
 		
     	return null;
     }
+ 
 
 
 }

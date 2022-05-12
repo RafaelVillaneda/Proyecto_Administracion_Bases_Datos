@@ -52,7 +52,9 @@ public class Conexion {
     }
     public boolean elimiarRegistro(String sql) {
     	try {
+    		
 			pstm = conexion.prepareStatement(sql);
+			pstm.executeUpdate();
 			return true;
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block

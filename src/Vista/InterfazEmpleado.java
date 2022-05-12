@@ -15,6 +15,8 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
 import javax.swing.JTextField;
 import javax.swing.JFormattedTextField;
 import javax.swing.JScrollPane;
@@ -36,6 +38,8 @@ public class InterfazEmpleado extends JFrame {
 	
 
 	private JPanel contentPane;
+	private ImageIcon imagen=new ImageIcon("RecursosVisuales/Agregar.png");
+	private Icon iconoAgregar;
 	private JTextField caja_nombre;
 	private JTextField cajaPrimerAp;
 	private JTextField caja_segundo_ap;
@@ -463,6 +467,7 @@ public class InterfazEmpleado extends JFrame {
 		table.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				if(comboBox.getSelectedIndex()>0) {
 				caja_nombre.setText("" + table.getValueAt(table.getSelectedRow(), 0));
 				cajaPrimerAp.setText("" + table.getValueAt(table.getSelectedRow(), 1));
 				caja_segundo_ap.setText("" + table.getValueAt(table.getSelectedRow(), 2));
@@ -479,7 +484,7 @@ public class InterfazEmpleado extends JFrame {
 				caja_sueldo.setText("" + table.getValueAt(table.getSelectedRow(), 7));
 				caja_superDni.setText("" + table.getValueAt(table.getSelectedRow(), 8));
 				caja_dno.setText("" + table.getValueAt(table.getSelectedRow(), 9));
-				
+				}
 				
 			}
 		});
@@ -521,8 +526,10 @@ public class InterfazEmpleado extends JFrame {
 		contentPane.add(caja_direccion);
 		
 		btn_Agregar = new JButton("Agregar");
+		btn_Agregar.setSelectedIcon(new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/Agregar.png")));
 		btn_Agregar.setEnabled(false);
 		btn_Agregar.setBackground(new Color(238, 232, 170));
+		
 		btn_Agregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				
@@ -564,6 +571,7 @@ public class InterfazEmpleado extends JFrame {
 							Integer.parseInt(caja_sueldo.getText()), caja_superDni.getText(), caja_dno.getText());
 					if(dao.eliminarRegistro(empleado)) {
 						JOptionPane.showMessageDialog(null,"Empleado eliminado con exito");
+						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado");
 					}else {
 						JOptionPane.showMessageDialog(null,"El Empleado NO fue eliminado");
 					}
@@ -579,6 +587,30 @@ public class InterfazEmpleado extends JFrame {
 		JLabel lblNewLabel_1_3 = new JLabel("Direccion:");
 		lblNewLabel_1_3.setBounds(10, 253, 73, 14);
 		contentPane.add(lblNewLabel_1_3);
+		
+		JButton btn_limpiar = new JButton("Limpiar");
+		btn_limpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				caja_nombre.setText("");
+				cajaPrimerAp.setText("");
+				caja_segundo_ap.setText("");
+				caja_dni.setText("");
+				combo_dias.setSelectedIndex(0);
+				combo_meses.setSelectedIndex(0);
+				combo_años.setSelectedIndex(0);
+				
+				caja_direccion.setText("");
+				
+				
+				caja_sueldo.setText("");
+				caja_superDni.setText("");
+				caja_dno.setText("");
+				actualizarTabla("SELECT * FROM Empresa.dbo.Empleado");
+			}
+		});
+		btn_limpiar.setBackground(new Color(238, 232, 170));
+		btn_limpiar.setBounds(398, 171, 88, 23);
+		contentPane.add(btn_limpiar);
 		
 		
 		
@@ -613,5 +645,4 @@ public class InterfazEmpleado extends JFrame {
 	
 		return false;
 	}//Verificar
-	
 }
