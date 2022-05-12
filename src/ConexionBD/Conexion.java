@@ -88,29 +88,47 @@ public class Conexion {
         }
         return false;
     }
-    public static boolean actualizarRegistroEmpleado(Empleado emp) {
+    public static boolean actualizarRegistroEmpleado(Empleado emp,String superDniOrigen,String dni) {
         try {
-            pstm = conexion
-                    .prepareStatement("UPDATE Empleado SET Nombre = ?, Apellido1 = ?,Apellido2=?,"
-                    		+ "Dni=?,FechaNac=?,Direccion=?, Sexo=?, Sueldo=?,SuperDni=?,"
-                    		+ "Dno=? WHERE Dni = ? AND SuperDni=?");
-            pstm.setString(1, emp.getNombre());
-            pstm.setString(2, emp.getApellido1());
-            pstm.setString(3, emp.getApellido2());
-            pstm.setString(4, emp.getDni());
-            pstm.setString(5, emp.getFechaNac());
-            pstm.setString(6, emp.getDireccion());
-            pstm.setString(7, emp.getSexo());
-            pstm.setInt(8, emp.getSueldo());
-            pstm.setString(9, emp.getSuperdni());
-            pstm.setString(10, emp.getDno());
+        	System.out.println(emp);
+        	if(!emp.getDno().equals("null")) {
+        		pstm = conexion.prepareStatement("UPDATE Empleado SET Nombre = ?, Apellido1 = ?,Apellido2=?,"
+                		+ "Dni=?,FechaNac=?,Direccion=?, Sexo=?, Sueldo=?,SuperDni=?,"
+                		+ "Dno=? WHERE Dni = ? AND SuperDni=?");
+		        pstm.setString(1, emp.getNombre());
+		        pstm.setString(2, emp.getApellido1());
+		        pstm.setString(3, emp.getApellido2());
+		        pstm.setString(4, emp.getDni());
+		        pstm.setString(5, emp.getFechaNac());
+		        pstm.setString(6, emp.getDireccion());
+		        pstm.setString(7, emp.getSexo());
+		        pstm.setInt(8, emp.getSueldo());
+		        pstm.setString(9, emp.getSuperdni());
+		        pstm.setInt(10, Integer.parseInt(emp.getDno()));
+		        
+		        pstm.setString(11, dni);
+		        pstm.setString(12, superDniOrigen);
+		        pstm.executeUpdate();
+        	}else {
+        		pstm = conexion.prepareStatement("UPDATE Empleado SET Nombre = ?, Apellido1 = ?,Apellido2=?"
+                		+ "Dni=?,FechaNac=?,Direccion=?, Sexo=?, Sueldo=?,SuperDni=?,"
+                		+ " WHERE Dni = ?");
+		        pstm.setString(1, emp.getNombre());
+		        pstm.setString(2, emp.getApellido1());
+		        pstm.setString(3, emp.getApellido2());
+		        pstm.setString(4, emp.getDni());
+		        pstm.setString(5, emp.getFechaNac());
+		        pstm.setString(6, emp.getDireccion());
+		        pstm.setString(7, emp.getSexo());
+		        pstm.setInt(8, emp.getSueldo());
+		        pstm.setString(9, emp.getSuperdni());
+		        
+		        pstm.setString(10, dni);
+		       // pstm.setString(11, superDniOrigen);
+		        pstm.executeUpdate();
+        	}
             
-            pstm.setString(11, emp.getDni());
-            pstm.setString(12, emp.getSuperdni());
-            
-            
-            pstm.executeUpdate();
-            return true;
+           return true;
         } catch (Exception ex) {
         	ex.printStackTrace();
             System.out.printf("Error al modificar el empleado");

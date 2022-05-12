@@ -58,6 +58,8 @@ public class InterfazEmpleado extends JFrame {
 	private JScrollPane scrollPane = new JScrollPane();
 	private EmpleadoDAO dao=new EmpleadoDAO();
 	private JButton btnModificar;
+	
+	String superDniOriginal="",dniOriginal="";
 
 	/**
 	 * Launch the application.
@@ -495,6 +497,10 @@ public class InterfazEmpleado extends JFrame {
 				caja_sueldo.setText("" + table.getValueAt(table.getSelectedRow(), 7));
 				caja_superDni.setText("" + table.getValueAt(table.getSelectedRow(), 8));
 				caja_dno.setText("" + table.getValueAt(table.getSelectedRow(), 9));
+				
+				superDniOriginal=caja_superDni.getText();
+				dniOriginal=caja_dni.getText();
+				
 				}
 				
 			}
@@ -633,7 +639,9 @@ public class InterfazEmpleado extends JFrame {
 				Empleado empleado=new Empleado(caja_nombre.getText(), cajaPrimerAp.getText(), 
 						caja_segundo_ap.getText(), caja_dni.getText(), fecha, caja_direccion.getText(), combo_sexo.getSelectedItem().toString(), 
 						Integer.parseInt(caja_sueldo.getText()), caja_superDni.getText(), caja_dno.getText());
-				if(dao.ActualizarRegistro(empleado)) {
+				System.out.println("Dni->"+dniOriginal+" superDni="+superDniOriginal);
+				
+				if(dao.ActualizarRegistro(empleado,superDniOriginal,dniOriginal)) {
 					JOptionPane.showMessageDialog(null,"Los datos fueron actualizados");
 					actualizarTabla("SELECT * FROM Empresa.dbo.Empleado");
 				}else {

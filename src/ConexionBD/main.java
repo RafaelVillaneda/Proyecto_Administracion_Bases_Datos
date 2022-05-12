@@ -26,7 +26,7 @@ public class main {
 			String consulta="SELECT * FROM Empresa.dbo.Empleado";
 			ResultSet resultado=sql.executeQuery(consulta);
 			while(resultado.next()) {
-				System.out.println(base);
+				//System.out.println(base);
 				base+=resultado.getString(1)+" "+resultado.getString(2)+"-";
 			}
 			System.out.println(base);
@@ -35,7 +35,7 @@ public class main {
 			e.printStackTrace();
 		}
 		
-		Empleado em=new Empleado("Ricardo", "Saldivar", "Quezada", "888", "2022-05-08", "18 de julio", "M",1200, "123456789", "1");
+		Empleado em=new Empleado("zzzzzzzzz", "zzzzzzzz", "zzzzzzzzzzz", "999", "2022-05-08", "18 de julio", "M",1200, "null", "1");
 		EmpleadoDAO dao=new EmpleadoDAO();
 		dao.insertarRegistro(em);
 		new InterfazEmpleado().setVisible(true);
