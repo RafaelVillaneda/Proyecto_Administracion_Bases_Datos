@@ -94,7 +94,7 @@ public class Conexion {
         	if(!emp.getDno().equals("null")) {
         		pstm = conexion.prepareStatement("UPDATE Empleado SET Nombre = ?, Apellido1 = ?,Apellido2=?,"
                 		+ "Dni=?,FechaNac=?,Direccion=?, Sexo=?, Sueldo=?,SuperDni=?,"
-                		+ "Dno=? WHERE Dni = ? AND SuperDni=?");
+                		+ "Dno=? WHERE Dni = ?");
 		        pstm.setString(1, emp.getNombre());
 		        pstm.setString(2, emp.getApellido1());
 		        pstm.setString(3, emp.getApellido2());
@@ -107,7 +107,7 @@ public class Conexion {
 		        pstm.setInt(10, Integer.parseInt(emp.getDno()));
 		        
 		        pstm.setString(11, dni);
-		        pstm.setString(12, superDniOrigen);
+		       
 		        pstm.executeUpdate();
         	}else {
         		pstm = conexion.prepareStatement("UPDATE Empleado SET Nombre = ?, Apellido1 = ?,Apellido2=?"

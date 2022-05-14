@@ -34,10 +34,11 @@ public class main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-		Empleado em=new Empleado("zzzzzzzzz", "zzzzzzzz", "zzzzzzzzzzz", "999", "2022-05-08", "18 de julio", "M",1200, "null", "1");
+		/*
+		Empleado em=new Empleado("zzzzzzzzz", "zzzzzzzz", "zzzzzzzzzzz", "123", "2022-05-08", "18 de julio", "M",1200, "777", "1");
 		EmpleadoDAO dao=new EmpleadoDAO();
 		dao.insertarRegistro(em);
+		*/
 		new InterfazEmpleado().setVisible(true);
 		
 		base="";

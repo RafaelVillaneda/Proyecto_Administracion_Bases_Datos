@@ -6,7 +6,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="C:/Users/Rafael Villaneda/Desktop/Nueva carpeta (2)/T2/Proyecto_Final_Administracion_Bases_Datos/Conector/mssql-jdbc-10.2.0.jre8.jar">
+	<classpathentry kind="lib" path="Conector/mssql-jdbc-10.2.0.jre8.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
