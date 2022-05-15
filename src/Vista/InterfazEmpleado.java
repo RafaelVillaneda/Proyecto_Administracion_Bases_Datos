@@ -34,6 +34,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.lang.reflect.Array;
+import java.awt.Toolkit;
 
 public class InterfazEmpleado extends JFrame {
 	
@@ -84,6 +85,7 @@ public class InterfazEmpleado extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfazEmpleado() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/empleado.png")));
 		setResizable(false);
 		setTitle("Empleados");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
