@@ -35,7 +35,12 @@ public class EmpleadoDAO {
         boolean resultado = false;
         
         //System.out.println("Insersion?--> "+Conexion.agregarRegistroEmpleado(empleado));
-        resultado = con.actualizarRegistroEmpleado(empleadoModificado,superdni,dni);
+        try {
+			resultado = con.actualizarRegistroEmpleado(empleadoModificado,superdni,dni);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
         
 		return resultado;
         

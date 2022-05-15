@@ -2,6 +2,7 @@ package Vista;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
+import java.awt.Image;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -60,6 +61,12 @@ public class InterfazEmpleado extends JFrame {
 	private JButton btnModificar;
 	
 	String superDniOriginal="",dniOriginal="";
+	
+	private Icon resizeIcon(ImageIcon icon,JButton boton) {
+	    Image img = icon.getImage();
+	    Image resizedImage = img.getScaledInstance(boton.getWidth(), boton.getHeight(),  java.awt.Image.SCALE_SMOOTH);
+	    return new ImageIcon(resizedImage);
+	}
 
 	/**
 	 * Launch the application.
@@ -542,8 +549,8 @@ public class InterfazEmpleado extends JFrame {
 		caja_direccion.setBounds(117, 250, 228, 20);
 		contentPane.add(caja_direccion);
 		
-		btn_Agregar = new JButton("Agregar");
-		btn_Agregar.setSelectedIcon(new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/Agregar.png")));
+		btn_Agregar = new JButton("");
+		//btn_Agregar.setSelectedIcon(new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/Agregar.png")));
 		btn_Agregar.setEnabled(false);
 		btn_Agregar.setBackground(new Color(238, 232, 170));
 		
@@ -572,10 +579,12 @@ public class InterfazEmpleado extends JFrame {
 				}//if
 			}
 		});
-		btn_Agregar.setBounds(398, 45, 88, 23);
+		btn_Agregar.setBounds(398, 45, 61, 50);
+		ImageIcon iconito=new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/Agregar.png"));
+		btn_Agregar.setIcon(resizeIcon(iconito,btn_Agregar));
 		contentPane.add(btn_Agregar);
 		
-		btnEliminar = new JButton("Eliminar");
+		btnEliminar = new JButton("");
 		btnEliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(verificarCajasVavias()==false) {
@@ -598,7 +607,11 @@ public class InterfazEmpleado extends JFrame {
 		});
 		btnEliminar.setEnabled(false);
 		btnEliminar.setBackground(new Color(238, 232, 170));
-		btnEliminar.setBounds(398, 106, 88, 23);
+		btnEliminar.setBounds(398, 106, 61, 46);
+		
+		ImageIcon iconitoBorrar=new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/icono_borrar.png"));
+		btnEliminar.setIcon(resizeIcon(iconitoBorrar,btn_Agregar));
+		
 		contentPane.add(btnEliminar);
 		
 		JLabel lblNewLabel_1_3 = new JLabel("Direccion:");
@@ -651,8 +664,13 @@ public class InterfazEmpleado extends JFrame {
 		});
 		btnModificar.setEnabled(false);
 		btnModificar.setBackground(new Color(238, 232, 170));
-		btnModificar.setBounds(398, 171, 88, 23);
+		btnModificar.setBounds(394, 188, 88, 23);
 		contentPane.add(btnModificar);
+		
+		JLabel lblNewLabel_6 = new JLabel("");
+		lblNewLabel_6.setIcon(new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/empleado.png")));
+		lblNewLabel_6.setBounds(560, 25, 181, 147);
+		contentPane.add(lblNewLabel_6);
 		
 		
 		

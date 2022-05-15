@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Savepoint;
 
 import Controlador.Localizaciones_Dpto_DAO;
 import Modelo.Departamento;
@@ -16,7 +17,7 @@ public class Conexion {
 
     private static Connection conexion = null;
     private static PreparedStatement pstm; //NO es tan seguro ya que permite SQL Injection, se recomienda PreparedStatement
-
+    private static Savepoint sp;
     public Conexion(int valor) {}
     private Conexion() {
         try {
@@ -29,7 +30,10 @@ public class Conexion {
             		+ "encrypt=true;trustServerCertificate=true;";
             try {
 				conexion= DriverManager.getConnection(URL);
-				//System.out.println("--Conexion efectuada correctamente--");
+				System.out.println("--Conexion efectuada correctamente--");
+				conexion.setAutoCommit(false);
+				sp=conexion.setSavepoint();
+				
 			} catch (SQLException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -82,13 +86,20 @@ public class Conexion {
             pstm.setString(10, empleado.getDno());
             
             pstm.executeUpdate();
+            conexion.commit();
             return true;
         } catch (Exception ex) {
         	ex.printStackTrace();
+        	try {
+				conexion.rollback();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
         }
         return false;
     }
-    public static boolean actualizarRegistroEmpleado(Empleado emp,String superDniOrigen,String dni) {
+    public static boolean actualizarRegistroEmpleado(Empleado emp,String superDniOrigen,String dni) throws SQLException {
         try {
         	System.out.println(emp);
         	if(!emp.getDno().equals("null")) {
@@ -109,6 +120,7 @@ public class Conexion {
 		        pstm.setString(11, dni);
 		       
 		        pstm.executeUpdate();
+		        conexion.commit();
         	}else {
         		pstm = conexion.prepareStatement("UPDATE Empleado SET Nombre = ?, Apellido1 = ?,Apellido2=?"
                 		+ "Dni=?,FechaNac=?,Direccion=?, Sexo=?, Sueldo=?,SuperDni=?,"
@@ -126,17 +138,19 @@ public class Conexion {
 		        pstm.setString(10, dni);
 		       // pstm.setString(11, superDniOrigen);
 		        pstm.executeUpdate();
+		        conexion.commit();
         	}
             
            return true;
         } catch (Exception ex) {
         	ex.printStackTrace();
             System.out.printf("Error al modificar el empleado");
+            conexion.rollback();
         }
         return false;
 
     }
-    public static boolean agregarRegistroDepartamento(Departamento dep) {
+    public static boolean agregarRegistroDepartamento(Departamento dep) throws SQLException {
         try {
             pstm = conexion.prepareStatement("INSERT INTO Departamento(NombreDpto, NumeroDpto, DniDirector, FechaIngresoDirector)"
             		+ " VALUES (?,?,?,?)");
@@ -147,10 +161,12 @@ public class Conexion {
             pstm.setString(4, dep.getFechaIngresoDirector());
             
             pstm.executeUpdate();
+            conexion.commit();
             return true;
         } catch (Exception ex) {
         	System.out.println(ex.toString());
-            System.out.printf("Error al agregar el empleado");
+        	conexion.rollback();
+            
         }
         return false;
     }
