@@ -84,6 +84,7 @@ public class InterfazEmpleado extends JFrame {
 	 * Create the frame.
 	 */
 	public InterfazEmpleado() {
+		setResizable(false);
 		setTitle("Empleados");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 767, 526);

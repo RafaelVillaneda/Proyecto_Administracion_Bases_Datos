@@ -33,6 +33,10 @@ public class Interfaz_Departamento extends JFrame {
 	private JButton btn_agregar;
 	private JButton btn_eliminar;
 	private JButton btn_modificar;
+	private JComboBox combo_dias;
+	private JComboBox combo_años;
+	private JComboBox combo_meses;
+	
 
 	/**
 	 * Launch the application.
@@ -54,6 +58,7 @@ public class Interfaz_Departamento extends JFrame {
 	 * Create the frame.
 	 */
 	public Interfaz_Departamento() {
+		setResizable(false);
 		setTitle("Departamentos");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 570, 516);
@@ -76,7 +81,58 @@ public class Interfaz_Departamento extends JFrame {
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(false);
 					btn_modificar.setEnabled(false);
+					combo_dias.setEnabled(false);
+					combo_años.setEnabled(false);
+					combo_meses.setEnabled(false);
 					table.setEnabled(false);
+				}else if(combo_accion.getSelectedIndex()==1) {
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					caja_nom_dep.setEnabled(true);
+					Caja_num_dep.setEnabled(true);
+					caja_dni_director.setEnabled(true);
+					btn_agregar.setEnabled(true);
+					btn_eliminar.setEnabled(false);
+					btn_modificar.setEnabled(false);
+					combo_dias.setEnabled(true);
+					combo_años.setEnabled(true);
+					combo_meses.setEnabled(true);
+					table.setEnabled(true);
+				}else if(combo_accion.getSelectedIndex()==2) {
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					caja_nom_dep.setEnabled(true);
+					Caja_num_dep.setEnabled(true);
+					caja_dni_director.setEnabled(true);
+					btn_agregar.setEnabled(false);
+					btn_eliminar.setEnabled(true);
+					btn_modificar.setEnabled(false);
+					combo_dias.setEnabled(true);
+					combo_años.setEnabled(true);
+					combo_meses.setEnabled(true);
+					table.setEnabled(true);
+				}else if(combo_accion.getSelectedIndex()==3) {
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					caja_nom_dep.setEnabled(true);
+					Caja_num_dep.setEnabled(true);
+					caja_dni_director.setEnabled(true);
+					btn_agregar.setEnabled(false);
+					btn_eliminar.setEnabled(false);
+					btn_modificar.setEnabled(true);
+					combo_dias.setEnabled(true);
+					combo_años.setEnabled(true);
+					combo_meses.setEnabled(true);
+					table.setEnabled(true);
+				}else if(combo_accion.getSelectedIndex()==4) {
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					caja_nom_dep.setEnabled(true);
+					Caja_num_dep.setEnabled(true);
+					caja_dni_director.setEnabled(true);
+					btn_agregar.setEnabled(false);
+					btn_eliminar.setEnabled(false);
+					btn_modificar.setEnabled(false);
+					combo_dias.setEnabled(true);
+					combo_años.setEnabled(true);
+					combo_meses.setEnabled(true);
+					table.setEnabled(true);
 				}
 				
 			}
@@ -97,21 +153,21 @@ public class Interfaz_Departamento extends JFrame {
 		lblDniDelDirector.setBounds(10, 201, 142, 14);
 		contentPane.add(lblDniDelDirector);
 		
-		JComboBox combo_años = new JComboBox();
+		combo_años = new JComboBox();
 		combo_años.setEnabled(false);
 		combo_años.setModel(new DefaultComboBoxModel(new String[] {"1950", "1951", "1952", "1953", "1954", "1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040", "2041", "2042", "2043", "2044", "2045", "2046", "2047", "2048", "2049", "2050", "2051", "2052", "2053", "2054", "2055", "2056", "2057", "2058", "2059", "2060", "2061", "2062", "2063", "2064", "2065", "2066", "2067", "2068", "2069", "2070"}));
 		combo_años.setToolTipText("Elige los dos ultimos n\u00FAmero de tu a\u00F1o de nacimiento");
 		combo_años.setBounds(315, 245, 74, 22);
 		contentPane.add(combo_años);
 		
-		JComboBox combo_meses = new JComboBox();
+		combo_meses = new JComboBox();
 		combo_meses.setEnabled(false);
 		combo_meses.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		combo_meses.setToolTipText("Elige tu mes de nacimiento\r\n");
 		combo_meses.setBounds(258, 245, 47, 22);
 		contentPane.add(combo_meses);
 		
-		JComboBox combo_dias = new JComboBox();
+		combo_dias = new JComboBox();
 		combo_dias.setEnabled(false);
 		combo_dias.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		combo_dias.setToolTipText("Elige tu d\u00EDa de nacimiento");
@@ -153,6 +209,17 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(caja_dni_director);
 		
 		JButton btn_limpiar = new JButton("Limpiar");
+		btn_limpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				caja_dni_director.setText("");
+				caja_nom_dep.setText("");
+				Caja_num_dep.setText("");
+				combo_años.setSelectedIndex(0);
+				combo_meses.setSelectedIndex(0);
+				combo_dias.setSelectedIndex(0);
+				actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+			}
+		});
 		btn_limpiar.setBackground(new Color(238, 232, 170));
 		btn_limpiar.setBounds(354, 148, 88, 23);
 		contentPane.add(btn_limpiar);
