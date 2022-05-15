@@ -62,11 +62,7 @@ public class InterfazEmpleado extends JFrame {
 	
 	String superDniOriginal="",dniOriginal="";
 	
-	private Icon resizeIcon(ImageIcon icon,JButton boton) {
-	    Image img = icon.getImage();
-	    Image resizedImage = img.getScaledInstance(boton.getWidth(), boton.getHeight(),  java.awt.Image.SCALE_SMOOTH);
-	    return new ImageIcon(resizedImage);
-	}
+	
 
 	/**
 	 * Launch the application.
@@ -705,4 +701,9 @@ public class InterfazEmpleado extends JFrame {
 	
 		return false;
 	}//Verificar
+	private Icon resizeIcon(ImageIcon icon,JButton boton) {
+	    Image img = icon.getImage();
+	    Image resizedImage = img.getScaledInstance(boton.getWidth(), boton.getHeight(),  java.awt.Image.SCALE_SMOOTH);
+	    return new ImageIcon(resizedImage);
+	}
 }
