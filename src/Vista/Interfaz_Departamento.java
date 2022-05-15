@@ -7,6 +7,14 @@ import java.awt.Image;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ConexionBD.Conexion;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 import java.awt.Color;
 import javax.swing.JLabel;
 import javax.swing.JComboBox;
@@ -211,6 +219,18 @@ public class Interfaz_Departamento extends JFrame {
 		JButton btn_limpiar = new JButton("Limpiar");
 		btn_limpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				try {
+                    Conexion cn = new Conexion(2);
+                    //cn.getConexion();
+                    String ruta=System.getProperty("user.dir")+"/src/vista/ReporteEmpleados.jasper";
+                    JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
+                    JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
+                    JasperViewer view= new JasperViewer(print,false);
+                    view.setVisible(true);
+                } catch (Exception ex) {
+                    System.err.println("Error al generar el reporte---->"+ex.getMessage());
+                }
+				/*
 				caja_dni_director.setText("");
 				caja_nom_dep.setText("");
 				Caja_num_dep.setText("");
@@ -218,6 +238,7 @@ public class Interfaz_Departamento extends JFrame {
 				combo_meses.setSelectedIndex(0);
 				combo_dias.setSelectedIndex(0);
 				actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+				*/
 			}
 		});
 		btn_limpiar.setBackground(new Color(238, 232, 170));
