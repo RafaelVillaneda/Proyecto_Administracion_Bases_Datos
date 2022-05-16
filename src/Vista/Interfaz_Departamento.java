@@ -30,6 +30,8 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class Interfaz_Departamento extends JFrame {
 
@@ -68,7 +70,6 @@ public class Interfaz_Departamento extends JFrame {
 	public Interfaz_Departamento() {
 		setResizable(false);
 		setTitle("Departamentos");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 570, 516);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 182, 193));
@@ -165,25 +166,25 @@ public class Interfaz_Departamento extends JFrame {
 		combo_años.setEnabled(false);
 		combo_años.setModel(new DefaultComboBoxModel(new String[] {"1950", "1951", "1952", "1953", "1954", "1955", "1956", "1957", "1958", "1959", "1960", "1961", "1962", "1963", "1964", "1965", "1966", "1967", "1968", "1969", "1970", "1971", "1972", "1973", "1974", "1975", "1976", "1977", "1978", "1979", "1980", "1981", "1982", "1983", "1984", "1985", "1986", "1987", "1988", "1989", "1990", "1991", "1992", "1993", "1994", "1995", "1996", "1997", "1998", "1999", "2000", "2001", "2002", "2003", "2004", "2005", "2006", "2007", "2008", "2009", "2010", "2011", "2012", "2013", "2014", "2015", "2016", "2017", "2018", "2019", "2020", "2021", "2022", "2023", "2024", "2025", "2026", "2027", "2028", "2029", "2030", "2031", "2032", "2033", "2034", "2035", "2036", "2037", "2038", "2039", "2040", "2041", "2042", "2043", "2044", "2045", "2046", "2047", "2048", "2049", "2050", "2051", "2052", "2053", "2054", "2055", "2056", "2057", "2058", "2059", "2060", "2061", "2062", "2063", "2064", "2065", "2066", "2067", "2068", "2069", "2070"}));
 		combo_años.setToolTipText("Elige los dos ultimos n\u00FAmero de tu a\u00F1o de nacimiento");
-		combo_años.setBounds(315, 245, 74, 22);
+		combo_años.setBounds(315, 251, 74, 22);
 		contentPane.add(combo_años);
 		
 		combo_meses = new JComboBox();
 		combo_meses.setEnabled(false);
 		combo_meses.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"}));
 		combo_meses.setToolTipText("Elige tu mes de nacimiento\r\n");
-		combo_meses.setBounds(258, 245, 47, 22);
+		combo_meses.setBounds(258, 251, 47, 22);
 		contentPane.add(combo_meses);
 		
 		combo_dias = new JComboBox();
 		combo_dias.setEnabled(false);
 		combo_dias.setModel(new DefaultComboBoxModel(new String[] {"01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12", "13", "14", "15", "16", "17", "18", "19", "20", "21", "22", "23", "24", "25", "26", "27", "28", "29", "30", "31"}));
 		combo_dias.setToolTipText("Elige tu d\u00EDa de nacimiento");
-		combo_dias.setBounds(201, 245, 47, 22);
+		combo_dias.setBounds(201, 251, 47, 22);
 		contentPane.add(combo_dias);
 		
 		JLabel lblFechaDeIngreso = new JLabel("Fecha de ingreso del director");
-		lblFechaDeIngreso.setBounds(10, 249, 171, 14);
+		lblFechaDeIngreso.setBounds(10, 255, 171, 14);
 		contentPane.add(lblFechaDeIngreso);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -199,18 +200,82 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		
 		caja_nom_dep = new JTextField();
+		caja_nom_dep.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isLetter(car)|| Character.isSpace(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(combo_accion.getSelectedIndex()==2||combo_accion.getSelectedIndex()==3 || combo_accion.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NombreDpto LIKE '"+caja_nom_dep.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isLetter(car)|| Character.isSpace(car)){}else{
+				e.consume();
+				}
+			}
+		});
 		caja_nom_dep.setEnabled(false);
 		caja_nom_dep.setBounds(10, 81, 127, 20);
 		contentPane.add(caja_nom_dep);
 		caja_nom_dep.setColumns(10);
 		
 		Caja_num_dep = new JTextField();
+		Caja_num_dep.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isDigit(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(combo_accion.getSelectedIndex()==2||combo_accion.getSelectedIndex()==3 || combo_accion.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto LIKE '"+Caja_num_dep.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isDigit(car)){}else{
+				e.consume();
+				}
+			}
+		});
 		Caja_num_dep.setEnabled(false);
 		Caja_num_dep.setColumns(10);
 		Caja_num_dep.setBounds(10, 160, 127, 20);
 		contentPane.add(Caja_num_dep);
 		
 		caja_dni_director = new JTextField();
+		caja_dni_director.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isDigit(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(combo_accion.getSelectedIndex()==2||combo_accion.getSelectedIndex()==3 || combo_accion.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE DniDirector LIKE '"+caja_dni_director.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isDigit(car)){}else{
+				e.consume();
+				}
+				
+			}
+		});
 		caja_dni_director.setEnabled(false);
 		caja_dni_director.setColumns(10);
 		caja_dni_director.setBounds(10, 228, 127, 20);
@@ -219,18 +284,6 @@ public class Interfaz_Departamento extends JFrame {
 		JButton btn_limpiar = new JButton("Limpiar");
 		btn_limpiar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-                    Conexion cn = new Conexion(2);
-                    //cn.getConexion();
-                    String ruta=System.getProperty("user.dir")+"/src/vista/ReporteEmpleados.jasper";
-                    JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
-                    JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
-                    JasperViewer view= new JasperViewer(print,false);
-                    view.setVisible(true);
-                } catch (Exception ex) {
-                    System.err.println("Error al generar el reporte---->"+ex.getMessage());
-                }
-				/*
 				caja_dni_director.setText("");
 				caja_nom_dep.setText("");
 				Caja_num_dep.setText("");
@@ -238,7 +291,6 @@ public class Interfaz_Departamento extends JFrame {
 				combo_meses.setSelectedIndex(0);
 				combo_dias.setSelectedIndex(0);
 				actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
-				*/
 			}
 		});
 		btn_limpiar.setBackground(new Color(238, 232, 170));
@@ -246,12 +298,21 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(btn_limpiar);
 		
 		btn_agregar = new JButton("");
+		btn_agregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				
+			}
+		});
 		btn_agregar.setEnabled(false);
 		btn_agregar.setBackground(new Color(238, 232, 170));
 		btn_agregar.setBounds(185, 148, 63, 60);
 		ImageIcon iconito=new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/agregar2.png"));
 		btn_agregar.setIcon(resizeIcon(iconito,btn_agregar));
-		
+		if(verificar_cajasVacias()==false) {
+			
+		}else {
+			
+		}
 		
 		contentPane.add(btn_agregar);
 		
@@ -292,5 +353,9 @@ public class Interfaz_Departamento extends JFrame {
 	    Image img = icon.getImage();
 	    Image resizedImage = img.getScaledInstance(boton.getWidth(), boton.getHeight(),  java.awt.Image.SCALE_SMOOTH);
 	    return new ImageIcon(resizedImage);
+	}
+	public boolean verificar_cajasVacias() {
+		
+		return false;
 	}
 }

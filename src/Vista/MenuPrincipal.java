@@ -6,18 +6,31 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import ConexionBD.Conexion;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.util.JRLoader;
+import net.sf.jasperreports.view.JasperViewer;
+
 import java.awt.Color;
 import java.awt.Toolkit;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class MenuPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btn_GUI_Empleados;
 	private JButton btn_localizacion;
+	private JButton btn_Grafica;
+	private JButton btn_departamentos;
+	private JButton btn_Reportes;
 
 	/**
 	 * Launch the application.
@@ -76,6 +89,11 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(lblGraficoSobreDepartamentos);
 		
 		btn_GUI_Empleados = new JButton("");
+		btn_GUI_Empleados.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new InterfazEmpleado().setVisible(true);
+			}
+		});
 		btn_GUI_Empleados.setBackground(new Color(245, 245, 220));
 		btn_GUI_Empleados.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/menu_Empleados.png")));
 		btn_GUI_Empleados.setBounds(10, 76, 131, 137);
@@ -87,19 +105,39 @@ public class MenuPrincipal extends JFrame {
 		btn_localizacion.setBackground(new Color(245, 245, 220));
 		contentPane.add(btn_localizacion);
 		
-		JButton btn_departamentos = new JButton("");
+		btn_departamentos = new JButton("");
+		btn_departamentos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Interfaz_Departamento().setVisible(true);
+			}
+		});
 		btn_departamentos.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/menu_departamento.png")));
 		btn_departamentos.setBackground(new Color(245, 245, 220));
 		btn_departamentos.setBounds(10, 302, 131, 137);
 		contentPane.add(btn_departamentos);
 		
-		JButton btn_Grafica = new JButton("");
+		btn_Grafica = new JButton("");
 		btn_Grafica.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/menu_graficos.png")));
 		btn_Grafica.setBackground(new Color(245, 245, 220));
 		btn_Grafica.setBounds(288, 302, 131, 137);
 		contentPane.add(btn_Grafica);
 		
-		JButton btn_Reportes = new JButton("");
+		btn_Reportes = new JButton("");
+		btn_Reportes.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+                    Conexion cn = new Conexion(2);
+                    //cn.getConexion();
+                    String ruta=System.getProperty("user.dir")+"/src/vista/ReporteEmpleados.jasper";
+                    JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
+                    JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
+                    JasperViewer view= new JasperViewer(print,false);
+                    view.setVisible(true);
+                } catch (Exception ex) {
+                    System.err.println("Error al generar el reporte---->"+ex.getMessage());
+                }
+			}
+		});
 		btn_Reportes.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/reporte.png")));
 		btn_Reportes.setBackground(new Color(245, 245, 220));
 		btn_Reportes.setBounds(531, 243, 131, 137);

@@ -88,7 +88,7 @@ public class InterfazEmpleado extends JFrame {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/empleado.png")));
 		setResizable(false);
 		setTitle("Empleados");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		
 		setBounds(100, 100, 767, 526);
 		contentPane = new JPanel();
 		contentPane.setBackground(Color.PINK);
