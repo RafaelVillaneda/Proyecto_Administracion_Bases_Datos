@@ -9,6 +9,8 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 
 import ConexionBD.Conexion;
+import Controlador.DepartamentoDAO;
+import Modelo.Departamento;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -17,6 +19,7 @@ import net.sf.jasperreports.view.JasperViewer;
 
 import java.awt.Color;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.Icon;
@@ -29,11 +32,15 @@ import javax.swing.JTextField;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
+import java.util.Arrays;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class Interfaz_Departamento extends JFrame {
+	DepartamentoDAO dao=new DepartamentoDAO();
 
 	private JPanel contentPane;
 	private JTable table;
@@ -46,6 +53,9 @@ public class Interfaz_Departamento extends JFrame {
 	private JComboBox combo_dias;
 	private JComboBox combo_años;
 	private JComboBox combo_meses;
+	private JTable table2;
+	private JLabel lblDepartamentos;
+	private JComboBox combo_accion;
 	
 
 	/**
@@ -70,16 +80,70 @@ public class Interfaz_Departamento extends JFrame {
 	public Interfaz_Departamento() {
 		setResizable(false);
 		setTitle("Departamentos");
-		setBounds(100, 100, 570, 516);
+		setBounds(100, 100, 789, 516);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(255, 182, 193));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		table = new JTable();
+		table.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(combo_accion.getSelectedIndex()>0) {
+					caja_nom_dep.setText("" + table.getValueAt(table.getSelectedRow(), 0));
+					Caja_num_dep.setText("" + table.getValueAt(table.getSelectedRow(), 1));
+					caja_dni_director.setText("" + table.getValueAt(table.getSelectedRow(), 2));
+					
+					String fecha[]=("" + table.getValueAt(table.getSelectedRow(), 3)).split("-");
+					System.out.println(Arrays.toString(fecha));
+					combo_dias.setSelectedItem(""+fecha[2]);
+					combo_meses.setSelectedItem(""+fecha[1]);
+					combo_años.setSelectedItem(""+fecha[0]);
+					
+					
+					
+					}
+			}
+		});
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBounds(530, 77, 233, 202);
+		contentPane.add(scrollPane_1);
+		
+		table2 = new JTable();
+		table2.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if(combo_accion.getSelectedIndex()>0) {
+				Caja_num_dep.setText("" + table2.getValueAt(table2.getSelectedRow(), 0));
+				}
+			}
+		});
+		scrollPane_1.setViewportView(table2);
+		
 		actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
 		table.setEnabled(false);
-		JComboBox combo_accion = new JComboBox();
+
+		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+		String url = "jdbc:sqlserver://localhost:1433;databaseName=Empresa;"
+        		+ "user=Lucy;"
+        		+ "password=gulf1;"
+        		+ "encrypt=true;trustServerCertificate=true;";
+		
+		ResultSetTableModel modeloDatos=null;
+		
+		try {
+			modeloDatos = new ResultSetTableModel(controlador, url,"SELECT * FROM localizaciones_dpto");
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		table2.setModel(modeloDatos);
+		
+		combo_accion = new JComboBox();
 		combo_accion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(combo_accion.getSelectedIndex()==0) {
@@ -300,6 +364,25 @@ public class Interfaz_Departamento extends JFrame {
 		btn_agregar = new JButton("");
 		btn_agregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(verificar_cajasVacias()==false) {
+				String fecha ="";
+				fecha+=combo_años.getSelectedItem().toString()+"-";
+				fecha+=combo_meses.getSelectedItem().toString()+"-";
+				fecha+=combo_dias.getSelectedItem().toString();
+				Departamento dep=new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(),fecha);
+				System.out.println(dep);
+				if(dao.buscarRegistroSuperDNI(caja_dni_director.getText())!=null) {
+				if(dao.insertarRegistro(dep)==true) {
+					JOptionPane.showMessageDialog(null,"Se Agrego el departamento");
+				}else {
+					JOptionPane.showMessageDialog(null,"No se pudo agregar el departamento");
+				}
+				}else {
+					JOptionPane.showMessageDialog(null,"Hay campos vacios!");
+				}
+				}else {
+					JOptionPane.showMessageDialog(null,"No existe ese Dni Director");
+				}
 				
 			}
 		});
@@ -329,6 +412,14 @@ public class Interfaz_Departamento extends JFrame {
 		btn_modificar.setBackground(new Color(238, 232, 170));
 		btn_modificar.setBounds(354, 197, 88, 23);
 		contentPane.add(btn_modificar);
+		
+		
+		
+		
+		
+		lblDepartamentos = new JLabel("Departamentos");
+		lblDepartamentos.setBounds(571, 35, 154, 14);
+		contentPane.add(lblDepartamentos);
 	}
 	public void actualizarTabla(String consulta) {
 		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -355,7 +446,9 @@ public class Interfaz_Departamento extends JFrame {
 	    return new ImageIcon(resizedImage);
 	}
 	public boolean verificar_cajasVacias() {
-		
+		if(caja_nom_dep.getText().isEmpty()||Caja_num_dep.getText().isEmpty()||caja_dni_director.getText().isEmpty()) {
+			return true;
+		}
 		return false;
 	}
 }

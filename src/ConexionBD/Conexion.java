@@ -7,6 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Savepoint;
 
+import javax.swing.JOptionPane;
+
 import Controlador.Localizaciones_Dpto_DAO;
 import Modelo.Departamento;
 import Modelo.Empleado;
@@ -164,7 +166,8 @@ public class Conexion {
             conexion.commit();
             return true;
         } catch (Exception ex) {
-        	System.out.println(ex.toString());
+        	//System.out.println(ex.toString());
+        	JOptionPane.showMessageDialog(null,"Ya existe un departamento en esa localizacion");
         	conexion.rollback();
             
         }
@@ -178,10 +181,16 @@ public class Conexion {
             pstm.setString(2,loc.getLocalizacionDpto());
             
             pstm.executeUpdate();
+            conexion.commit();
             return true;
         } catch (Exception ex) {
         	System.out.println(ex.toString());
-            System.out.printf("Error al agregar el empleado");
+        	try {
+				conexion.rollback();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+            System.out.printf("Error al agregar");
         }
         return false;
     }

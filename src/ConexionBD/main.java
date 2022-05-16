@@ -9,6 +9,7 @@ import Modelo.Departamento;
 import Modelo.Empleado;
 import Modelo.Localizaciones_Dpto;
 import Vista.InterfazEmpleado;
+import Vista.Interfaz_Departamento;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -39,7 +40,8 @@ public class main {
 		EmpleadoDAO dao=new EmpleadoDAO();
 		dao.insertarRegistro(em);
 		*/
-		new InterfazEmpleado().setVisible(true);
+		
+		System.out.println("Pase");
 		
 		base="";
 		try {
@@ -60,11 +62,11 @@ public class main {
 		DepartamentoDAO DAO=new DepartamentoDAO();
 		DAO.insertarRegistro(dep);
 		*/
-		/*
-		Localizaciones_Dpto localizacion=new Localizaciones_Dpto(5,"Zacatecas");//Los dos campos son primarias
+		new Interfaz_Departamento().setVisible(true);
+		Localizaciones_Dpto localizacion=new Localizaciones_Dpto(6,"Torreon");//Los dos campos son primarias
 		Localizaciones_Dpto_DAO dao=new Localizaciones_Dpto_DAO();
 		dao.insertarRegistro(localizacion);
-		*/
+		
 	}
 
 }
