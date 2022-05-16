@@ -27,7 +27,11 @@ public class EmpleadoDAO {
     	con.getConexion();
         boolean resultado = false;
         System.out.println(obj);
-        resultado=con.elimiarRegistro("DELETE FROM Empresa.dbo.Empleado WHERE Dni='"+obj.getDni()+"' AND SuperDni='"+obj.getSuperdni()+"'");
+        try {
+			resultado=con.elimiarRegistro("DELETE FROM Empresa.dbo.Empleado WHERE Dni='"+obj.getDni()+"' AND SuperDni='"+obj.getSuperdni()+"'");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
     	return resultado;
     }
     public boolean ActualizarRegistro(Empleado empleadoModificado,String superdni,String dni) {

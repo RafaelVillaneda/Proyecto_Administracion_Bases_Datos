@@ -56,15 +56,16 @@ public class Conexion {
 
          return conexion;
     }
-    public boolean elimiarRegistro(String sql) {
+    public boolean elimiarRegistro(String sql) throws SQLException {
     	try {
     		
 			pstm = conexion.prepareStatement(sql);
 			pstm.executeUpdate();
+			conexion.commit();
 			return true;
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
+			conexion.rollback();
 			return false;
 		}
         

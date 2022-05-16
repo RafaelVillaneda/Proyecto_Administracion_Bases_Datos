@@ -374,14 +374,16 @@ public class Interfaz_Departamento extends JFrame {
 				if(dao.buscarRegistroSuperDNI(caja_dni_director.getText())!=null) {
 				if(dao.insertarRegistro(dep)==true) {
 					JOptionPane.showMessageDialog(null,"Se Agrego el departamento");
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
 				}else {
 					JOptionPane.showMessageDialog(null,"No se pudo agregar el departamento");
 				}
 				}else {
-					JOptionPane.showMessageDialog(null,"Hay campos vacios!");
+					JOptionPane.showMessageDialog(null,"No existe ese Dni Director");
+					
 				}
 				}else {
-					JOptionPane.showMessageDialog(null,"No existe ese Dni Director");
+					JOptionPane.showMessageDialog(null,"Hay campos vacios!");
 				}
 				
 			}
@@ -400,6 +402,26 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(btn_agregar);
 		
 		btn_eliminar = new JButton("");
+		btn_eliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(dao.buscarRegistroSuperDNO(Caja_num_dep.getText())==null) {
+					System.out.println("Entro a borrar");
+					//Llamar procedimiento
+					String fecha ="";
+					fecha+=combo_años.getSelectedItem().toString()+"-";
+					fecha+=combo_meses.getSelectedItem().toString()+"-";
+					fecha+=combo_dias.getSelectedItem().toString();
+					if(dao.eliminarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
+						JOptionPane.showMessageDialog(null,"Se elimino correctamente el Departamento");
+						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se elimino Departamento");
+					}
+				}else {
+					
+				}
+			}
+		});
 		btn_eliminar.setEnabled(false);
 		btn_eliminar.setBackground(new Color(238, 232, 170));
 		btn_eliminar.setBounds(258, 148, 59, 60);
