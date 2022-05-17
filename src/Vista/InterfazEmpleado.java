@@ -167,7 +167,7 @@ public class InterfazEmpleado extends JFrame {
 					caja_nombre.setEnabled(true);
 					cajaPrimerAp.setEnabled(true);
 					caja_segundo_ap.setEnabled(true);
-					caja_dni.setEnabled(true);
+					caja_dni.setEnabled(false);
 					caja_sueldo.setEnabled(true);
 					caja_superDni.setEnabled(true);
 					caja_dno.setEnabled(true);

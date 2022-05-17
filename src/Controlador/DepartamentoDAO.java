@@ -23,11 +23,26 @@ public class DepartamentoDAO {
 		}
         return resultado;
     }
-	
+	public boolean ActualizarRegistro(Departamento dep) {
+		cn.getConexion();
+		boolean resultado = false;
+		try {
+			resultado= cn.actualizarRegistroDepartamento(dep);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultado;
+	}
 	public boolean eliminarRegistro(Departamento dep) {
     	cn.getConexion();
         boolean resultado = false;
-        System.out.println(dep);
+        try {
+			cn.procedimiento(dep.getNumeroDpto());
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
         try {
 			resultado=cn.elimiarRegistro("DELETE FROM Empresa.dbo.Departamento WHERE NumeroDpto="+dep.getNumeroDpto()+";");
 		} catch (SQLException e) {

@@ -185,7 +185,7 @@ public class Interfaz_Departamento extends JFrame {
 				}else if(combo_accion.getSelectedIndex()==3) {
 					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
 					caja_nom_dep.setEnabled(true);
-					Caja_num_dep.setEnabled(true);
+					Caja_num_dep.setEnabled(false);
 					caja_dni_director.setEnabled(true);
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(false);
@@ -404,9 +404,6 @@ public class Interfaz_Departamento extends JFrame {
 		btn_eliminar = new JButton("");
 		btn_eliminar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(dao.buscarRegistroSuperDNO(Caja_num_dep.getText())!=null) {
-					System.out.println("Entro a borrar");
-					//Llamar procedimiento
 					String fecha ="";
 					fecha+=combo_años.getSelectedItem().toString()+"-";
 					fecha+=combo_meses.getSelectedItem().toString()+"-";
@@ -417,18 +414,7 @@ public class Interfaz_Departamento extends JFrame {
 					}else {
 						JOptionPane.showMessageDialog(null,"No se elimino Departamento");
 					}
-				}else {//No hay un dno el cual este en un departamento
-					String fecha ="";
-					fecha+=combo_años.getSelectedItem().toString()+"-";
-					fecha+=combo_meses.getSelectedItem().toString()+"-";
-					fecha+=combo_dias.getSelectedItem().toString();
-					if(dao.eliminarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
-						JOptionPane.showMessageDialog(null,"Se elimino correctamente el Departamento");
-						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
-					}else {
-						JOptionPane.showMessageDialog(null,"No se elimino Departamento");
-					}
-				}
+				
 			}
 		});
 		btn_eliminar.setEnabled(false);
@@ -439,6 +425,22 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(btn_eliminar);
 		
 		btn_modificar = new JButton("Modificar");
+		btn_modificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				if(verificar_cajasVacias()==false) {
+				String fecha ="";
+				fecha+=combo_años.getSelectedItem().toString()+"-";
+				fecha+=combo_meses.getSelectedItem().toString()+"-";
+				fecha+=combo_dias.getSelectedItem().toString();
+				if(dao.ActualizarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
+					JOptionPane.showMessageDialog(null,"Se actualizo correctamente el Departamento");
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"Hay camnpos vacios");
+				}
+			}
+		});
 		btn_modificar.setEnabled(false);
 		btn_modificar.setBackground(new Color(238, 232, 170));
 		btn_modificar.setBounds(354, 197, 88, 23);

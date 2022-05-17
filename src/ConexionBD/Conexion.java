@@ -71,12 +71,25 @@ public class Conexion {
         
     	
     }
+    public void procedimiento(int dno) throws SQLException {
+    	try {
+			pstm = conexion.prepareStatement("EXECUTE [dbo].[sp_actualizarDno] ?");
+			pstm.setInt(1, dno);
+			pstm.execute();
+			conexion.commit();
+		} catch (SQLException e) {
+			conexion.rollback();
+			e.printStackTrace();
+		}
+    }
     
     public static boolean agregarRegistroEmpleado(Empleado empleado) {
         try {
             pstm = conexion.prepareStatement("INSERT \"Empleado\" (\"Nombre\",\"Apellido1\",\"Apellido2\",\"Dni\",\"FechaNac\",\"Direccion\",\"Sexo\",\"Sueldo\","
             		+ "\"SuperDni\",\"Dno\")"
             		+ " VALUES (?,?,?,?,?,?,?,?,?,?)");
+            
+            
             pstm.setString(1, empleado.getNombre());
             pstm.setString(2, empleado.getApellido1());
             pstm.setString(3, empleado.getApellido2());
@@ -101,6 +114,23 @@ public class Conexion {
 			}
         }
         return false;
+    }
+    public static boolean actualizarRegistroDepartamento(Departamento dep) throws SQLException {
+    	System.out.println(dep);
+    	try {
+			pstm = conexion.prepareStatement("UPDATE Departamento SET NombreDpto=?,DniDirector=?,FechaIngresoDirector=? WHERE NumeroDpto =?");
+			pstm.setString(1, dep.getNombreDpto());
+	        pstm.setString(2, dep.getDniDirector());
+	        pstm.setString(3, dep.getFechaIngresoDirector());
+	        pstm.setInt(4, dep.getNumeroDpto());
+	        pstm.executeUpdate();
+            conexion.commit();
+            return true;
+		} catch (SQLException e) {
+			conexion.rollback();
+			e.printStackTrace();
+		}
+    	return false;
     }
     public static boolean actualizarRegistroEmpleado(Empleado emp,String superDniOrigen,String dni) throws SQLException {
         try {
