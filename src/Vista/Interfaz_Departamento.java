@@ -121,7 +121,7 @@ public class Interfaz_Departamento extends JFrame {
 		});
 		scrollPane_1.setViewportView(table2);
 		
-		actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+		actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
 		table.setEnabled(false);
 
 		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -147,7 +147,7 @@ public class Interfaz_Departamento extends JFrame {
 		combo_accion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(combo_accion.getSelectedIndex()==0) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
 					caja_nom_dep.setEnabled(false);
 					Caja_num_dep.setEnabled(false);
 					caja_dni_director.setEnabled(false);
@@ -159,7 +159,7 @@ public class Interfaz_Departamento extends JFrame {
 					combo_meses.setEnabled(false);
 					table.setEnabled(false);
 				}else if(combo_accion.getSelectedIndex()==1) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
@@ -171,7 +171,7 @@ public class Interfaz_Departamento extends JFrame {
 					combo_meses.setEnabled(true);
 					table.setEnabled(true);
 				}else if(combo_accion.getSelectedIndex()==2) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
@@ -183,7 +183,7 @@ public class Interfaz_Departamento extends JFrame {
 					combo_meses.setEnabled(true);
 					table.setEnabled(true);
 				}else if(combo_accion.getSelectedIndex()==3) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(false);
 					caja_dni_director.setEnabled(true);
@@ -195,7 +195,7 @@ public class Interfaz_Departamento extends JFrame {
 					combo_meses.setEnabled(true);
 					table.setEnabled(true);
 				}else if(combo_accion.getSelectedIndex()==4) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
