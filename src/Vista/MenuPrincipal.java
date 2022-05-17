@@ -128,12 +128,12 @@ public class MenuPrincipal extends JFrame {
 				try {
                     Conexion cn = new Conexion(2);
                     //cn.getConexion();
-                    String ruta=System.getProperty("user.dir")+"/src/vista/ReporteEmpleados.jasper";
-                    JasperReport jaspe=(JasperReport)JRLoader.loadObjectFromFile(ruta);
+                    JasperReport jaspe=(JasperReport)JRLoader.loadObject(MenuPrincipal.class.getResource("/Reportes/ReporteEmpleados.jasper"));
                     JasperPrint print=JasperFillManager.fillReport(jaspe, null,cn.getConexion());
                     JasperViewer view= new JasperViewer(print,false);
                     view.setVisible(true);
                 } catch (Exception ex) {
+                	ex.printStackTrace();
                     System.err.println("Error al generar el reporte---->"+ex.getMessage());
                 }
 			}

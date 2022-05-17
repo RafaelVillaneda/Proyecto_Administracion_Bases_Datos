@@ -29,7 +29,7 @@ public class DepartamentoDAO {
         boolean resultado = false;
         System.out.println(dep);
         try {
-			resultado=cn.elimiarRegistro("DELETE FROM Empresa.dbo.Departamento WHERE NumeroDpto='"+dep.getNumeroDpto()+";");
+			resultado=cn.elimiarRegistro("DELETE FROM Empresa.dbo.Departamento WHERE NumeroDpto="+dep.getNumeroDpto()+";");
 		} catch (SQLException e) {
 			e.printStackTrace();
 			System.out.println("Error eliminar departamento");
