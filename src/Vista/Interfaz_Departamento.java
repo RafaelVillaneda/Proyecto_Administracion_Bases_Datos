@@ -57,10 +57,9 @@ public class Interfaz_Departamento extends JFrame {
 	private JComboBox combo_dias;
 	private JComboBox combo_años;
 	private JComboBox combo_meses;
-	private JTable table2;
-	private JLabel lblDepartamentos;
 	private JComboBox combo_accion;
 	private JTextField caja_ubicacion;
+	private JLabel lblNewLabel_1;
 	
 
 	/**
@@ -106,37 +105,23 @@ public class Interfaz_Departamento extends JFrame {
 					combo_meses.setSelectedItem(""+fecha[1]);
 					combo_años.setSelectedItem(""+fecha[0]);
 					
+					caja_ubicacion.setText("" + table.getValueAt(table.getSelectedRow(), 4));
 					
 					
 					}
 			}
 		});
-		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(530, 295, 233, 158);
-		contentPane.add(scrollPane_1);
-		
-		table2 = new JTable();
-		table2.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if(combo_accion.getSelectedIndex()>0) {
-				Caja_num_dep.setText("" + table2.getValueAt(table2.getSelectedRow(), 0));
-				caja_ubicacion.setText("" + table2.getValueAt(table2.getSelectedRow(), 1));
-				}
-			}
-		});
-		scrollPane_1.setViewportView(table2);
-		
-		actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
+		//Vista
+		actualizarTabla("SELECT * FROM dept_vista");
 		table.setEnabled(false);
 
-		actualizarTabla2("SELECT * FROM localizaciones_dpto");
+		//actualizarTabla2("SELECT * FROM localizaciones_dpto");
 		
 		combo_accion = new JComboBox();
 		combo_accion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(combo_accion.getSelectedIndex()==0) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
+					actualizarTabla("SELECT * FROM dept_vista");
 					caja_nom_dep.setEnabled(false);
 					Caja_num_dep.setEnabled(false);
 					caja_dni_director.setEnabled(false);
@@ -149,7 +134,7 @@ public class Interfaz_Departamento extends JFrame {
 					combo_meses.setEnabled(false);
 					table.setEnabled(false);
 				}else if(combo_accion.getSelectedIndex()==1) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
+					actualizarTabla("SELECT * FROM dept_vista");
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
@@ -162,7 +147,7 @@ public class Interfaz_Departamento extends JFrame {
 					combo_meses.setEnabled(true);
 					table.setEnabled(true);
 				}else if(combo_accion.getSelectedIndex()==2) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
+					actualizarTabla("SELECT * FROM dept_vista");
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
@@ -175,7 +160,7 @@ public class Interfaz_Departamento extends JFrame {
 					combo_meses.setEnabled(true);
 					table.setEnabled(true);
 				}else if(combo_accion.getSelectedIndex()==3) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
+					actualizarTabla("SELECT * FROM dept_vista");
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(false);
 					caja_dni_director.setEnabled(true);
@@ -188,7 +173,7 @@ public class Interfaz_Departamento extends JFrame {
 					combo_meses.setEnabled(true);
 					table.setEnabled(true);
 				}else if(combo_accion.getSelectedIndex()==4) {
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
+					actualizarTabla("SELECT * FROM dept_vista");
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
@@ -246,7 +231,7 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(lblFechaDeIngreso);
 		
 		JScrollPane scrollPane = new JScrollPane();
-		scrollPane.setBounds(10, 295, 495, 158);
+		scrollPane.setBounds(10, 295, 638, 158);
 		contentPane.add(scrollPane);
 		
 		
@@ -343,8 +328,8 @@ public class Interfaz_Departamento extends JFrame {
 				combo_años.setSelectedIndex(0);
 				combo_meses.setSelectedIndex(0);
 				combo_dias.setSelectedIndex(0);
-				actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
-				actualizarTabla2("SELECT * FROM localizaciones_dpto");
+				actualizarTabla("SELECT * FROM dept_vista");
+				//actualizarTabla2("SELECT * FROM localizaciones_dpto");
 			}
 		});
 		btn_limpiar.setBackground(new Color(238, 232, 170));
@@ -365,8 +350,8 @@ public class Interfaz_Departamento extends JFrame {
 				if(dao.insertarRegistro(dep)==true) {
 					JOptionPane.showMessageDialog(null,"Se Agrego el departamento");
 					daoLoc.insertarRegistro(new Localizaciones_Dpto(dep.getNumeroDpto(), caja_ubicacion.getText()));
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
-					actualizarTabla2("SELECT * FROM localizaciones_dpto");
+					actualizarTabla("SELECT * FROM dept_vista");
+					//actualizarTabla2("SELECT * FROM localizaciones_dpto");
 				}else {
 					JOptionPane.showMessageDialog(null,"No se pudo agregar el departamento");
 				}
@@ -403,8 +388,8 @@ public class Interfaz_Departamento extends JFrame {
 					daoLoc.eliminarRegistro(new Localizaciones_Dpto(Integer.parseInt(Caja_num_dep.getText()),caja_ubicacion.getText()));
 					if(dao.eliminarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
 						JOptionPane.showMessageDialog(null,"Se elimino correctamente el Departamento");
-						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
-						actualizarTabla2("SELECT * FROM localizaciones_dpto");
+						actualizarTabla("SELECT * FROM dept_vista");
+						//actualizarTabla2("SELECT * FROM localizaciones_dpto");
 					}else {
 						JOptionPane.showMessageDialog(null,"No se elimino Departamento");
 					}
@@ -428,8 +413,8 @@ public class Interfaz_Departamento extends JFrame {
 				fecha+=combo_dias.getSelectedItem().toString();
 				if(dao.ActualizarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
 					JOptionPane.showMessageDialog(null,"Se actualizo correctamente el Departamento");
-					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
-					actualizarTabla2("SELECT * FROM localizaciones_dpto");
+					actualizarTabla("SELECT * FROM dept_vista");
+					//actualizarTabla2("SELECT * FROM localizaciones_dpto");
 					}
 				}else {
 					JOptionPane.showMessageDialog(null,"Hay camnpos vacios");
@@ -441,14 +426,6 @@ public class Interfaz_Departamento extends JFrame {
 		btn_modificar.setBounds(354, 197, 88, 23);
 		contentPane.add(btn_modificar);
 		
-		
-		
-		
-		
-		lblDepartamentos = new JLabel("Departamentos");
-		lblDepartamentos.setBounds(530, 270, 154, 14);
-		contentPane.add(lblDepartamentos);
-		
 		JLabel lblUbicacin = new JLabel("Ubicaci\u00F3n");
 		lblUbicacin.setBounds(185, 56, 154, 14);
 		contentPane.add(lblUbicacin);
@@ -459,12 +436,11 @@ public class Interfaz_Departamento extends JFrame {
 		caja_ubicacion.setBounds(185, 81, 127, 20);
 		contentPane.add(caja_ubicacion);
 		
-		JLabel lblNewLabel_1 = new JLabel("");
-		//lblNewLabel_1.setIcon(new ImageIcon(Interfaz_Departamento.class.getResource("/Vista/RecursosVisuales/dep.png")));
-		lblNewLabel_1.setBounds(508, 0, 265, 232);
+		lblNewLabel_1 = new JLabel("");
+		lblNewLabel_1.setBounds(468, 0, 305, 248);
+		contentPane.add(lblNewLabel_1);
 		ImageIcon iconito3=new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/dep.png"));
 		lblNewLabel_1.setIcon(resizeIcon(iconito3,lblNewLabel_1));
-		contentPane.add(lblNewLabel_1);
 	}
 	public void actualizarTabla(String consulta) {
 		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -485,26 +461,7 @@ public class Interfaz_Departamento extends JFrame {
 		}
 		table.setModel(modeloDatos);
 	}//Actualozar Tabla
-	public void actualizarTabla2(String consulta) {
-		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String url = "jdbc:sqlserver://localhost:1433;databaseName=Empresa;"
-        		+ "user=Lucy;"
-        		+ "password=gulf1;"
-        		+ "encrypt=true;trustServerCertificate=true;";
-		
-		ResultSetTableModel modeloDatos=null;
-		
-		try {
-			modeloDatos = new ResultSetTableModel(controlador, url,consulta);
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		table2.setModel(modeloDatos);
-	}
+	
 	private Icon resizeIcon(ImageIcon icon,JButton boton) {
 	    Image img = icon.getImage();
 	    Image resizedImage = img.getScaledInstance(boton.getWidth(), boton.getHeight(),  java.awt.Image.SCALE_SMOOTH);
