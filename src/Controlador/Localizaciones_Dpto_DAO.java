@@ -32,6 +32,21 @@ Conexion cn = new Conexion(2);
 		}
 		return resultado;
 	}
+	public boolean ActualizarRegistro(Localizaciones_Dpto loc) {
+    	cn.getConexion();
+        boolean resultado = false;
+        
+        //System.out.println("Insersion?--> "+Conexion.agregarRegistroEmpleado(empleado));
+        try {
+			resultado = cn.actualizarRegistroDepartamentoLoc(loc);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        
+		return resultado;
+        
+    }
     	
 
 }

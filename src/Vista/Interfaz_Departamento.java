@@ -325,6 +325,7 @@ public class Interfaz_Departamento extends JFrame {
 				caja_dni_director.setText("");
 				caja_nom_dep.setText("");
 				Caja_num_dep.setText("");
+				caja_ubicacion.setText("");
 				combo_años.setSelectedIndex(0);
 				combo_meses.setSelectedIndex(0);
 				combo_dias.setSelectedIndex(0);
@@ -411,6 +412,7 @@ public class Interfaz_Departamento extends JFrame {
 				fecha+=combo_años.getSelectedItem().toString()+"-";
 				fecha+=combo_meses.getSelectedItem().toString()+"-";
 				fecha+=combo_dias.getSelectedItem().toString();
+				daoLoc.ActualizarRegistro(new Localizaciones_Dpto(Integer.parseInt(Caja_num_dep.getText()),caja_ubicacion.getText()));
 				if(dao.ActualizarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
 					JOptionPane.showMessageDialog(null,"Se actualizo correctamente el Departamento");
 					actualizarTabla("SELECT * FROM dept_vista");

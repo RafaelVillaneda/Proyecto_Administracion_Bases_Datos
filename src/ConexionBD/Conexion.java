@@ -132,6 +132,21 @@ public class Conexion {
 		}
     	return false;
     }
+    public static boolean actualizarRegistroDepartamentoLoc(Localizaciones_Dpto loc) throws SQLException {
+    	try {
+			pstm = conexion.prepareStatement("UPDATE localizaciones_dpto SET UbicacionDpto=? WHERE NumeroDpto =?");
+			pstm.setString(1, loc.getLocalizacionDpto());
+	        pstm.setInt(2, loc.getNumeroDpto());
+	     
+	        pstm.executeUpdate();
+            conexion.commit();
+            return true;
+		} catch (SQLException e) {
+			conexion.rollback();
+			e.printStackTrace();
+		}
+    	return false;
+    }
     public static boolean actualizarRegistroEmpleado(Empleado emp,String superDniOrigen,String dni) throws SQLException {
         try {
         	System.out.println(emp);

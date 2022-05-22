@@ -63,9 +63,9 @@ public class main {
 		DAO.insertarRegistro(dep);
 		*/
 		new Interfaz_Departamento().setVisible(true);
-		Localizaciones_Dpto localizacion=new Localizaciones_Dpto(6,"Torreon");//Los dos campos son primarias
+		Localizaciones_Dpto localizacion=new Localizaciones_Dpto(8,"San luis potosi");//Los dos campos son primarias
 		Localizaciones_Dpto_DAO dao=new Localizaciones_Dpto_DAO();
-		dao.insertarRegistro(localizacion);
+		//dao.insertarRegistro(localizacion);
 		
 	}
 
