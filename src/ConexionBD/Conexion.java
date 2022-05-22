@@ -204,7 +204,7 @@ public class Conexion {
         }
         return false;
     }
-    public static boolean AgregarRegistroLocalizaciones_Dpto(Localizaciones_Dpto loc) {
+    public static boolean AgregarRegistroLocalizaciones_Dpto(Localizaciones_Dpto loc) throws SQLException {
         try {
             pstm = conexion.prepareStatement("INSERT INTO localizaciones_dpto(NumeroDpto,UbicacionDpto)"
             		+ " VALUES (?,?)");
@@ -216,11 +216,7 @@ public class Conexion {
             return true;
         } catch (Exception ex) {
         	System.out.println(ex.toString());
-        	try {
-				conexion.rollback();
-			} catch (SQLException e) {
-				e.printStackTrace();
-			}
+        	conexion.rollback();
             System.out.printf("Error al agregar");
         }
         return false;

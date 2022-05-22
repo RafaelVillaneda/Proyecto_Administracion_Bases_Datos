@@ -27,7 +27,6 @@ public class MenuPrincipal extends JFrame {
 
 	private JPanel contentPane;
 	private JButton btn_GUI_Empleados;
-	private JButton btn_localizacion;
 	private JButton btn_Grafica;
 	private JButton btn_departamentos;
 	private JButton btn_Reportes;
@@ -56,7 +55,7 @@ public class MenuPrincipal extends JFrame {
 		setTitle("Menu Principal");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/menu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 745, 533);
+		setBounds(100, 100, 449, 533);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(245, 245, 220));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -73,19 +72,14 @@ public class MenuPrincipal extends JFrame {
 		lblDepartamentos.setBounds(0, 227, 171, 41);
 		contentPane.add(lblDepartamentos);
 		
-		JLabel lblLocalizaciones = new JLabel("Localizaciones");
-		lblLocalizaciones.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblLocalizaciones.setBounds(296, 23, 171, 41);
-		contentPane.add(lblLocalizaciones);
-		
 		JLabel lblRegistroDeEmpleados = new JLabel("Registro de empleados");
 		lblRegistroDeEmpleados.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblRegistroDeEmpleados.setBounds(296, 227, 171, 41);
+		lblRegistroDeEmpleados.setBounds(234, 39, 171, 41);
 		contentPane.add(lblRegistroDeEmpleados);
 		
 		JLabel lblGraficoSobreDepartamentos = new JLabel("Reporte de Empleados");
 		lblGraficoSobreDepartamentos.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
-		lblGraficoSobreDepartamentos.setBounds(497, 183, 222, 41);
+		lblGraficoSobreDepartamentos.setBounds(234, 227, 222, 41);
 		contentPane.add(lblGraficoSobreDepartamentos);
 		
 		btn_GUI_Empleados = new JButton("");
@@ -98,12 +92,6 @@ public class MenuPrincipal extends JFrame {
 		btn_GUI_Empleados.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/menu_Empleados.png")));
 		btn_GUI_Empleados.setBounds(10, 76, 131, 137);
 		contentPane.add(btn_GUI_Empleados);
-		
-		btn_localizacion = new JButton("");
-		btn_localizacion.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/localizacion.png")));
-		btn_localizacion.setBounds(267, 75, 171, 125);
-		btn_localizacion.setBackground(new Color(245, 245, 220));
-		contentPane.add(btn_localizacion);
 		
 		btn_departamentos = new JButton("");
 		btn_departamentos.addActionListener(new ActionListener() {
@@ -119,7 +107,7 @@ public class MenuPrincipal extends JFrame {
 		btn_Grafica = new JButton("");
 		btn_Grafica.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/menu_graficos.png")));
 		btn_Grafica.setBackground(new Color(245, 245, 220));
-		btn_Grafica.setBounds(288, 302, 131, 137);
+		btn_Grafica.setBounds(234, 76, 131, 137);
 		contentPane.add(btn_Grafica);
 		
 		btn_Reportes = new JButton("");
@@ -140,7 +128,7 @@ public class MenuPrincipal extends JFrame {
 		});
 		btn_Reportes.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/reporte.png")));
 		btn_Reportes.setBackground(new Color(245, 245, 220));
-		btn_Reportes.setBounds(531, 243, 131, 137);
+		btn_Reportes.setBounds(234, 302, 131, 137);
 		contentPane.add(btn_Reportes);
 		
 	}

@@ -10,7 +10,9 @@ import javax.swing.border.EmptyBorder;
 
 import ConexionBD.Conexion;
 import Controlador.DepartamentoDAO;
+import Controlador.Localizaciones_Dpto_DAO;
 import Modelo.Departamento;
+import Modelo.Localizaciones_Dpto;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
 import net.sf.jasperreports.engine.JasperReport;
@@ -41,6 +43,8 @@ import java.awt.event.MouseEvent;
 
 public class Interfaz_Departamento extends JFrame {
 	DepartamentoDAO dao=new DepartamentoDAO();
+	Localizaciones_Dpto_DAO daoLoc=new Localizaciones_Dpto_DAO();
+	
 
 	private JPanel contentPane;
 	private JTable table;
@@ -56,6 +60,7 @@ public class Interfaz_Departamento extends JFrame {
 	private JTable table2;
 	private JLabel lblDepartamentos;
 	private JComboBox combo_accion;
+	private JTextField caja_ubicacion;
 	
 
 	/**
@@ -107,7 +112,7 @@ public class Interfaz_Departamento extends JFrame {
 			}
 		});
 		JScrollPane scrollPane_1 = new JScrollPane();
-		scrollPane_1.setBounds(530, 77, 233, 202);
+		scrollPane_1.setBounds(530, 295, 233, 158);
 		contentPane.add(scrollPane_1);
 		
 		table2 = new JTable();
@@ -116,6 +121,7 @@ public class Interfaz_Departamento extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				if(combo_accion.getSelectedIndex()>0) {
 				Caja_num_dep.setText("" + table2.getValueAt(table2.getSelectedRow(), 0));
+				caja_ubicacion.setText("" + table2.getValueAt(table2.getSelectedRow(), 1));
 				}
 			}
 		});
@@ -124,24 +130,7 @@ public class Interfaz_Departamento extends JFrame {
 		actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto >-1");
 		table.setEnabled(false);
 
-		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
-		String url = "jdbc:sqlserver://localhost:1433;databaseName=Empresa;"
-        		+ "user=Lucy;"
-        		+ "password=gulf1;"
-        		+ "encrypt=true;trustServerCertificate=true;";
-		
-		ResultSetTableModel modeloDatos=null;
-		
-		try {
-			modeloDatos = new ResultSetTableModel(controlador, url,"SELECT * FROM localizaciones_dpto");
-		} catch (ClassNotFoundException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (SQLException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		table2.setModel(modeloDatos);
+		actualizarTabla2("SELECT * FROM localizaciones_dpto");
 		
 		combo_accion = new JComboBox();
 		combo_accion.addActionListener(new ActionListener() {
@@ -151,6 +140,7 @@ public class Interfaz_Departamento extends JFrame {
 					caja_nom_dep.setEnabled(false);
 					Caja_num_dep.setEnabled(false);
 					caja_dni_director.setEnabled(false);
+					caja_ubicacion.setEnabled(false);
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(false);
 					btn_modificar.setEnabled(false);
@@ -163,6 +153,7 @@ public class Interfaz_Departamento extends JFrame {
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
+					caja_ubicacion.setEnabled(true);
 					btn_agregar.setEnabled(true);
 					btn_eliminar.setEnabled(false);
 					btn_modificar.setEnabled(false);
@@ -175,6 +166,7 @@ public class Interfaz_Departamento extends JFrame {
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
+					caja_ubicacion.setEnabled(true);
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(true);
 					btn_modificar.setEnabled(false);
@@ -187,6 +179,7 @@ public class Interfaz_Departamento extends JFrame {
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(false);
 					caja_dni_director.setEnabled(true);
+					caja_ubicacion.setEnabled(true);
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(false);
 					btn_modificar.setEnabled(true);
@@ -199,6 +192,7 @@ public class Interfaz_Departamento extends JFrame {
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
+					caja_ubicacion.setEnabled(true);
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(false);
 					btn_modificar.setEnabled(false);
@@ -248,7 +242,7 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(combo_dias);
 		
 		JLabel lblFechaDeIngreso = new JLabel("Fecha de ingreso del director");
-		lblFechaDeIngreso.setBounds(10, 255, 171, 14);
+		lblFechaDeIngreso.setBounds(201, 231, 171, 14);
 		contentPane.add(lblFechaDeIngreso);
 		
 		JScrollPane scrollPane = new JScrollPane();
@@ -257,11 +251,6 @@ public class Interfaz_Departamento extends JFrame {
 		
 		
 		scrollPane.setViewportView(table);
-		
-		JLabel lblNewLabel_1 = new JLabel("Empresa");
-		lblNewLabel_1.setIcon(new ImageIcon(Interfaz_Departamento.class.getResource("/Vista/RecursosVisuales/icono_departamento.png")));
-		lblNewLabel_1.setBounds(228, 0, 190, 163);
-		contentPane.add(lblNewLabel_1);
 		
 		caja_nom_dep = new JTextField();
 		caja_nom_dep.addKeyListener(new KeyAdapter() {
@@ -374,7 +363,9 @@ public class Interfaz_Departamento extends JFrame {
 				if(dao.buscarRegistroSuperDNI(caja_dni_director.getText())!=null) {
 				if(dao.insertarRegistro(dep)==true) {
 					JOptionPane.showMessageDialog(null,"Se Agrego el departamento");
+					daoLoc.insertarRegistro(new Localizaciones_Dpto(dep.getNumeroDpto(), caja_ubicacion.getText()));
 					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					actualizarTabla2("SELECT * FROM localizaciones_dpto");
 				}else {
 					JOptionPane.showMessageDialog(null,"No se pudo agregar el departamento");
 				}
@@ -411,6 +402,7 @@ public class Interfaz_Departamento extends JFrame {
 					if(dao.eliminarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
 						JOptionPane.showMessageDialog(null,"Se elimino correctamente el Departamento");
 						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+						actualizarTabla2("SELECT * FROM localizaciones_dpto");
 					}else {
 						JOptionPane.showMessageDialog(null,"No se elimino Departamento");
 					}
@@ -435,6 +427,7 @@ public class Interfaz_Departamento extends JFrame {
 				if(dao.ActualizarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
 					JOptionPane.showMessageDialog(null,"Se actualizo correctamente el Departamento");
 					actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+					actualizarTabla2("SELECT * FROM localizaciones_dpto");
 					}
 				}else {
 					JOptionPane.showMessageDialog(null,"Hay camnpos vacios");
@@ -451,8 +444,25 @@ public class Interfaz_Departamento extends JFrame {
 		
 		
 		lblDepartamentos = new JLabel("Departamentos");
-		lblDepartamentos.setBounds(571, 35, 154, 14);
+		lblDepartamentos.setBounds(530, 270, 154, 14);
 		contentPane.add(lblDepartamentos);
+		
+		JLabel lblUbicacin = new JLabel("Ubicaci\u00F3n");
+		lblUbicacin.setBounds(185, 56, 154, 14);
+		contentPane.add(lblUbicacin);
+		
+		caja_ubicacion = new JTextField();
+		caja_ubicacion.setEnabled(false);
+		caja_ubicacion.setColumns(10);
+		caja_ubicacion.setBounds(185, 81, 127, 20);
+		contentPane.add(caja_ubicacion);
+		
+		JLabel lblNewLabel_1 = new JLabel("");
+		//lblNewLabel_1.setIcon(new ImageIcon(Interfaz_Departamento.class.getResource("/Vista/RecursosVisuales/dep.png")));
+		lblNewLabel_1.setBounds(508, 0, 265, 232);
+		ImageIcon iconito3=new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/dep.png"));
+		lblNewLabel_1.setIcon(resizeIcon(iconito3,lblNewLabel_1));
+		contentPane.add(lblNewLabel_1);
 	}
 	public void actualizarTabla(String consulta) {
 		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
@@ -473,9 +483,34 @@ public class Interfaz_Departamento extends JFrame {
 		}
 		table.setModel(modeloDatos);
 	}//Actualozar Tabla
+	public void actualizarTabla2(String consulta) {
+		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+		String url = "jdbc:sqlserver://localhost:1433;databaseName=Empresa;"
+        		+ "user=Lucy;"
+        		+ "password=gulf1;"
+        		+ "encrypt=true;trustServerCertificate=true;";
+		
+		ResultSetTableModel modeloDatos=null;
+		
+		try {
+			modeloDatos = new ResultSetTableModel(controlador, url,consulta);
+		} catch (ClassNotFoundException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		table2.setModel(modeloDatos);
+	}
 	private Icon resizeIcon(ImageIcon icon,JButton boton) {
 	    Image img = icon.getImage();
 	    Image resizedImage = img.getScaledInstance(boton.getWidth(), boton.getHeight(),  java.awt.Image.SCALE_SMOOTH);
+	    return new ImageIcon(resizedImage);
+	}
+	private Icon resizeIcon(ImageIcon icon,JLabel label) {
+	    Image img = icon.getImage();
+	    Image resizedImage = img.getScaledInstance(label.getWidth(), label.getHeight(),  java.awt.Image.SCALE_SMOOTH);
 	    return new ImageIcon(resizedImage);
 	}
 	public boolean verificar_cajasVacias() {

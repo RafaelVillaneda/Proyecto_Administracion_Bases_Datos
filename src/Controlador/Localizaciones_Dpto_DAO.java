@@ -1,5 +1,7 @@
 package Controlador;
 
+import java.sql.SQLException;
+
 import ConexionBD.Conexion;
 import Modelo.Departamento;
 import Modelo.Localizaciones_Dpto;
@@ -10,7 +12,11 @@ Conexion cn = new Conexion(2);
 	public boolean insertarRegistro(Localizaciones_Dpto loc) {
     	cn.getConexion();
         boolean resultado = false;
-        resultado = cn.AgregarRegistroLocalizaciones_Dpto(loc);
+        try {
+			resultado = cn.AgregarRegistroLocalizaciones_Dpto(loc);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
         return resultado;
     }
 
