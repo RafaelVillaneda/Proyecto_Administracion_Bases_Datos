@@ -344,6 +344,7 @@ public class Interfaz_Departamento extends JFrame {
 				combo_meses.setSelectedIndex(0);
 				combo_dias.setSelectedIndex(0);
 				actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
+				actualizarTabla2("SELECT * FROM localizaciones_dpto");
 			}
 		});
 		btn_limpiar.setBackground(new Color(238, 232, 170));
@@ -399,6 +400,7 @@ public class Interfaz_Departamento extends JFrame {
 					fecha+=combo_años.getSelectedItem().toString()+"-";
 					fecha+=combo_meses.getSelectedItem().toString()+"-";
 					fecha+=combo_dias.getSelectedItem().toString();
+					daoLoc.eliminarRegistro(new Localizaciones_Dpto(Integer.parseInt(Caja_num_dep.getText()),caja_ubicacion.getText()));
 					if(dao.eliminarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
 						JOptionPane.showMessageDialog(null,"Se elimino correctamente el Departamento");
 						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento");
@@ -514,7 +516,7 @@ public class Interfaz_Departamento extends JFrame {
 	    return new ImageIcon(resizedImage);
 	}
 	public boolean verificar_cajasVacias() {
-		if(caja_nom_dep.getText().isEmpty()||Caja_num_dep.getText().isEmpty()||caja_dni_director.getText().isEmpty()) {
+		if(caja_nom_dep.getText().isEmpty()||Caja_num_dep.getText().isEmpty()||caja_dni_director.getText().isEmpty()||caja_ubicacion.getText().isEmpty()) {
 			return true;
 		}
 		return false;
