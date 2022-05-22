@@ -105,6 +105,11 @@ public class MenuPrincipal extends JFrame {
 		contentPane.add(btn_departamentos);
 		
 		btn_Grafica = new JButton("");
+		btn_Grafica.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Interfaz_Grafica().setVisible(true);
+			}
+		});
 		btn_Grafica.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/menu_graficos.png")));
 		btn_Grafica.setBackground(new Color(245, 245, 220));
 		btn_Grafica.setBounds(234, 76, 131, 137);
