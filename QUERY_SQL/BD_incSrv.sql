@@ -231,5 +231,15 @@ as
 SELECT D.NombreDpto,D.NumeroDpto,D.DniDirector,D.FechaIngresoDirector,L.UbicacionDpto FROM Departamento D,localizaciones_dpto L WHERE D.NumeroDpto=L.NumeroDpto 
 
 
+DROP VIEW IF EXISTS grafica_view
+GO
+CREATE VIEW grafica_view 
+as
+SELECT UbicacionDpto as Ubicacion,count(*) as Total_Empleados_Trabajando FROM Empleado,localizaciones_dpto where dno=NumeroDpto
+GROUP BY UbicacionDpto
+HAVING COUNT(*)>1
+
+
+
 
 
