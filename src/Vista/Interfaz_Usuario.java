@@ -24,6 +24,9 @@ import java.awt.event.ActionListener;
 import java.sql.SQLException;
 import java.awt.event.ActionEvent;
 import javax.swing.JPasswordField;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.awt.Font;
 
 public class Interfaz_Usuario extends JFrame {
 
@@ -36,6 +39,7 @@ public class Interfaz_Usuario extends JFrame {
 	private JButton btn_limpiar;
 	private JPasswordField caja_contra;
 	UsuarioDAO DAO=new UsuarioDAO();
+	private JLabel lblNewLabel_1;
 	/**
 	 * Launch the application.
 	 */
@@ -57,7 +61,6 @@ public class Interfaz_Usuario extends JFrame {
 	 */
 	public Interfaz_Usuario() {
 		setIconImage(Toolkit.getDefaultToolkit().getImage(Interfaz_Usuario.class.getResource("/Vista/RecursosVisuales/usuario.png")));
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(250, 240, 230));
@@ -122,6 +125,20 @@ public class Interfaz_Usuario extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		caja_usuario = new JTextField();
+		caja_usuario.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isLetter(car) || borro==KeyEvent.VK_BACK_SPACE){
+					if(combo_accion.getSelectedIndex()==2||combo_accion.getSelectedIndex()==3 || combo_accion.getSelectedIndex()==4) {
+						actualizarTabla("SELECT usuario FROM Usuarios WHERE usuario LIKE '%"+caja_usuario.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+			}
+		});
 		caja_usuario.setEnabled(false);
 		caja_usuario.setBounds(10, 69, 86, 20);
 		contentPane.add(caja_usuario);
@@ -141,6 +158,7 @@ public class Interfaz_Usuario extends JFrame {
 		btn_agregar = new JButton("Agregar Usuario");
 		btn_agregar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				if(!caja_usuario.getText().isEmpty() && !caja_contra.getText().isEmpty()) {
 				Usuario usu=new Usuario(caja_usuario.getText(), caja_contra.getText());
 				if(DAO.insertarRegistro(usu)==true) {
 					JOptionPane.showMessageDialog(null,"Se agrego el usuario correctamente");
@@ -148,6 +166,10 @@ public class Interfaz_Usuario extends JFrame {
 				}else {
 					JOptionPane.showMessageDialog(null,"No se pudo e el usuario");
 				}
+			}else {
+				JOptionPane.showMessageDialog(null,"Debes de llenar los campos");
+			}
+				actualizarTabla("SELECT usuario FROM Usuarios");
 			}
 		});
 		btn_agregar.setEnabled(false);
@@ -183,8 +205,8 @@ public class Interfaz_Usuario extends JFrame {
 				if(u!=null) {
 					String contra=JOptionPane.showInputDialog(rootPane,"Ingresa la vieja contraseña");
 					if(u.getContraseña().equals(contra)) {
-						System.out.println("entre al if");
-						System.out.println(DAO.ActualizarRegistro(u));
+						u.setContraseña(caja_contra.getText());
+						DAO.ActualizarRegistro(u);
 						JOptionPane.showMessageDialog(null,"Registro actualizado");
 					}else {
 						JOptionPane.showMessageDialog(null,"Error contraseña incorrecta");
@@ -201,6 +223,13 @@ public class Interfaz_Usuario extends JFrame {
 		contentPane.add(btn_modificar);
 		
 		btn_limpiar = new JButton("Limpiar");
+		btn_limpiar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				caja_contra.setText("");
+				caja_usuario.setText("");
+				actualizarTabla("SELECT usuario FROM Usuarios");
+			}
+		});
 		btn_limpiar.setEnabled(false);
 		btn_limpiar.setBounds(265, 212, 141, 23);
 		contentPane.add(btn_limpiar);
@@ -209,8 +238,14 @@ public class Interfaz_Usuario extends JFrame {
 		caja_contra.setEnabled(false);
 		caja_contra.setBounds(130, 68, 120, 22);
 		contentPane.add(caja_contra);
+		
+		lblNewLabel_1 = new JLabel("Usuario");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.ITALIC, 29));
+		lblNewLabel_1.setBounds(296, 2, 198, 27);
+		contentPane.add(lblNewLabel_1);
 		actualizarTabla("SELECT usuario FROM Usuarios");
 	}
+	
 	
 	public void actualizarTabla(String consulta) {
 		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";

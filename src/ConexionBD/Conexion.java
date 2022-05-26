@@ -151,6 +151,7 @@ public class Conexion {
     
     public static boolean actualizarRegistroUsuarios(Usuario u) throws SQLException {
     	try {
+
 			pstm = conexion.prepareStatement("UPDATE usuarios SET password=? WHERE usuario =?");
 			pstm.setString(1,u.getContraseña());
 	        pstm.setString(2,u.getUsuario());

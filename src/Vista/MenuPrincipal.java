@@ -30,6 +30,8 @@ public class MenuPrincipal extends JFrame {
 	private JButton btn_Grafica;
 	private JButton btn_departamentos;
 	private JButton btn_Reportes;
+	private JLabel lblUsuarios;
+	private JButton btn_usuarios;
 
 	/**
 	 * Launch the application.
@@ -55,7 +57,7 @@ public class MenuPrincipal extends JFrame {
 		setTitle("Menu Principal");
 		setIconImage(Toolkit.getDefaultToolkit().getImage(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/menu.png")));
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 449, 533);
+		setBounds(100, 100, 610, 533);
 		contentPane = new JPanel();
 		contentPane.setBackground(new Color(245, 245, 220));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -135,6 +137,22 @@ public class MenuPrincipal extends JFrame {
 		btn_Reportes.setBackground(new Color(245, 245, 220));
 		btn_Reportes.setBounds(234, 302, 131, 137);
 		contentPane.add(btn_Reportes);
+		
+		lblUsuarios = new JLabel("Usuarios");
+		lblUsuarios.setFont(new Font("Yu Gothic UI Semibold", Font.PLAIN, 15));
+		lblUsuarios.setBounds(461, 173, 171, 41);
+		contentPane.add(lblUsuarios);
+		
+		btn_usuarios = new JButton("");
+		btn_usuarios.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				new Interfaz_Usuario().setVisible(true);
+			}
+		});
+		btn_usuarios.setIcon(new ImageIcon(MenuPrincipal.class.getResource("/Vista/RecursosVisuales/usuarios_icono_menu.png")));
+		btn_usuarios.setBackground(new Color(245, 245, 220));
+		btn_usuarios.setBounds(436, 239, 131, 137);
+		contentPane.add(btn_usuarios);
 		
 	}
 }
