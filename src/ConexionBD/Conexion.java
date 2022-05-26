@@ -13,6 +13,7 @@ import Controlador.Localizaciones_Dpto_DAO;
 import Modelo.Departamento;
 import Modelo.Empleado;
 import Modelo.Localizaciones_Dpto;
+import Modelo.Usuario;
 
 public class Conexion {
 	
@@ -207,6 +208,24 @@ public class Conexion {
             pstm.setInt(2, dep.getNumeroDpto());
             pstm.setString(3, dep.getDniDirector());
             pstm.setString(4, dep.getFechaIngresoDirector());
+            
+            pstm.executeUpdate();
+            conexion.commit();
+            return true;
+        } catch (Exception ex) {
+        	//System.out.println(ex.toString());
+        	JOptionPane.showMessageDialog(null,"Ya existe un departamento en esa localizacion");
+        	conexion.rollback();
+            
+        }
+        return false;
+    }
+    public static boolean agregarRegistroUsuario(Usuario usu) throws SQLException {
+        try {
+            pstm = conexion.prepareStatement("INSERT INTO usuarios (usuario,password) VALUES(?,?)");
+            // pstm.setInt(1, categoria.getCategoryID());
+            pstm.setString(1, usu.getUsuario());
+            pstm.setString(2, usu.getContraseña());
             
             pstm.executeUpdate();
             conexion.commit();
