@@ -6,10 +6,15 @@ import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
+
+import Controlador.UsuarioDAO;
+import Modelo.Usuario;
+
 import java.awt.Toolkit;
 import javax.swing.JComboBox;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -30,6 +35,7 @@ public class Interfaz_Usuario extends JFrame {
 	private JButton btn_modificar;
 	private JButton btn_limpiar;
 	private JPasswordField caja_contra;
+	UsuarioDAO DAO=new UsuarioDAO();
 	/**
 	 * Launch the application.
 	 */
@@ -82,7 +88,7 @@ public class Interfaz_Usuario extends JFrame {
 					table.setEnabled(true);
 				}else if(combo_accion.getSelectedIndex()==2) {
 					caja_usuario.setEnabled(true);
-					caja_contra.setEnabled(true);
+					caja_contra.setEnabled(false);
 					btn_eliminar.setEnabled(true);
 					btn_agregar.setEnabled(false);
 					btn_limpiar.setEnabled(true);
@@ -98,7 +104,7 @@ public class Interfaz_Usuario extends JFrame {
 					table.setEnabled(true);
 				}else if(combo_accion.getSelectedIndex()==4) {
 					caja_usuario.setEnabled(true);
-					caja_contra.setEnabled(true);
+					caja_contra.setEnabled(false);
 					btn_eliminar.setEnabled(false);
 					btn_limpiar.setEnabled(true);
 					btn_modificar.setEnabled(false);
@@ -133,16 +139,63 @@ public class Interfaz_Usuario extends JFrame {
 		contentPane.add(lblContrasea);
 		
 		btn_agregar = new JButton("Agregar Usuario");
+		btn_agregar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario usu=new Usuario(caja_usuario.getText(), caja_contra.getText());
+				if(DAO.insertarRegistro(usu)==true) {
+					JOptionPane.showMessageDialog(null,"Se agrego el usuario correctamente");
+					actualizarTabla("SELECT usuario FROM Usuarios");
+				}else {
+					JOptionPane.showMessageDialog(null,"No se pudo e el usuario");
+				}
+			}
+		});
 		btn_agregar.setEnabled(false);
 		btn_agregar.setBounds(265, 68, 141, 23);
 		contentPane.add(btn_agregar);
 		
 		btn_eliminar = new JButton("Eliminar Usuario");
+		btn_eliminar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario usu=new Usuario(caja_usuario.getText(),"");
+				System.out.println(usu.getUsuario());
+				if(!usu.getUsuario().equals("rafael") && DAO.eliminarRegistro(usu)==true) {
+					if(DAO.buscarRegistro(caja_usuario.getText())!=null) {
+						JOptionPane.showMessageDialog(null,"Usuario Eliminado correctamente");
+					}else {
+						JOptionPane.showMessageDialog(null,"No existe el usuario que deseas eliminar");
+					}
+					
+					actualizarTabla("SELECT usuario FROM Usuarios");
+				}else {
+					JOptionPane.showMessageDialog(null,"No se pudo eliminar el usuario");
+				}
+			}
+		});
 		btn_eliminar.setEnabled(false);
 		btn_eliminar.setBounds(265, 113, 141, 23);
 		contentPane.add(btn_eliminar);
 		
 		btn_modificar = new JButton("Modificar Usuario");
+		btn_modificar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				Usuario u=DAO.buscarRegistro(caja_usuario.getText());
+				if(u!=null) {
+					String contra=JOptionPane.showInputDialog(rootPane,"Ingresa la vieja contraseña");
+					if(u.getContraseña().equals(contra)) {
+						System.out.println("entre al if");
+						System.out.println(DAO.ActualizarRegistro(u));
+						JOptionPane.showMessageDialog(null,"Registro actualizado");
+					}else {
+						JOptionPane.showMessageDialog(null,"Error contraseña incorrecta");
+					}
+				}else {
+					JOptionPane.showMessageDialog(null,"No existe el usuario que deseas modificar");
+				}
+				actualizarTabla("SELECT usuario FROM Usuarios");
+				
+			}
+		});
 		btn_modificar.setEnabled(false);
 		btn_modificar.setBounds(265, 162, 141, 23);
 		contentPane.add(btn_modificar);

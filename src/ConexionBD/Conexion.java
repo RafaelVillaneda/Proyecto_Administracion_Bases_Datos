@@ -148,6 +148,23 @@ public class Conexion {
 		}
     	return false;
     }
+    
+    public static boolean actualizarRegistroUsuarios(Usuario u) throws SQLException {
+    	try {
+			pstm = conexion.prepareStatement("UPDATE usuarios SET password=? WHERE usuario =?");
+			pstm.setString(1,u.getContraseña());
+	        pstm.setString(2,u.getUsuario());
+	     
+	        pstm.executeUpdate();
+            conexion.commit();
+            return true;
+		} catch (SQLException e) {
+			conexion.rollback();
+			e.printStackTrace();
+		}
+    	return false;
+    }
+    
     public static boolean actualizarRegistroEmpleado(Empleado emp,String superDniOrigen,String dni) throws SQLException {
         try {
         	System.out.println(emp);
@@ -220,7 +237,7 @@ public class Conexion {
         }
         return false;
     }
-    public static boolean agregarRegistroUsuario(Usuario usu) throws SQLException {
+    public static boolean agregarRegistroUsuario(Usuario usu) throws SQLException{
         try {
             pstm = conexion.prepareStatement("INSERT INTO usuarios (usuario,password) VALUES(?,?)");
             // pstm.setInt(1, categoria.getCategoryID());
@@ -231,8 +248,6 @@ public class Conexion {
             conexion.commit();
             return true;
         } catch (Exception ex) {
-        	//System.out.println(ex.toString());
-        	JOptionPane.showMessageDialog(null,"Ya existe un departamento en esa localizacion");
         	conexion.rollback();
             
         }
