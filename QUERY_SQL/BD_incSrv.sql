@@ -112,8 +112,10 @@ GO
 INSERT INTO Departamento(NombreDpto, NumeroDpto, DniDirector, FechaIngresoDirector) VALUES
 ('Sede Central',1,'888665555','1981-06-19'),
 ('Administracion',4,'987654321','1981-06-19'),
-('Investigacion',5,'333445555','1988-05-22')
+('Investigacion',5,'333445555','1988-05-22'),
+('N/A',-1,123456789,'1981-06-19')
 GO
+
 
 INSERT INTO localizaciones_dpto VALUES
 (1,'Madrid'),
@@ -181,7 +183,7 @@ GO
 
 
 CREATE TABLE Usuarios(
-	usuario varchar(255) NOT NULL,
+	usuario varchar(255),
 	password varchar(255) NOT NULL
 )
 GO
@@ -191,35 +193,7 @@ ADD CONSTRAINT PK_Usuario PRIMARY KEY (usuario);
 
 INSERT INTO usuarios (usuario,password) VALUES ('Admin','admin')
 
-CREATE TRIGGER TR_Eliminacion_SuperDni
-ON [dbo].[Empleado] FOR DELETE
-AS
-BEGIN
-SET NOCOUNT ON;
-UPDATE Empresa.dbo.Empleado SET Empleado.SuperDni= null WHERE Empleado.SuperDni=(Select TOP(1) deleted.Dni FROM deleted)
-END
-GO
 
-CREATE PROCEDURE [dbo].[sp_actualizarDno]  @Dno int
-AS
-UPDATE dbo.Empleado SET Empleado.Dno= -1 WHERE Empleado.Dno=@Dno
-GO
-
-DROP VIEW IF EXISTS dept_vista
-GO
-CREATE VIEW dept_vista 
-as
-SELECT D.NombreDpto,D.NumeroDpto,D.DniDirector,D.FechaIngresoDirector,L.UbicacionDpto FROM Departamento D,localizaciones_dpto L WHERE D.NumeroDpto=L.NumeroDpto 
-
-
-DROP VIEW IF EXISTS grafica_view
-GO
-
-CREATE VIEW grafica_view 
-as
-SELECT UbicacionDpto as Ubicacion,count(*) as Total_Empleados_Trabajando FROM Empleado,localizaciones_dpto where dno=NumeroDpto
-GROUP BY UbicacionDpto
-HAVING COUNT(*)>1
 
 
 
