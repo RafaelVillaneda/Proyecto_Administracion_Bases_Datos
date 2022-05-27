@@ -1,5 +1,6 @@
 CREATE DATABASE Empresa
 GO
+
 USE Empresa
 GO
 
@@ -12,7 +13,6 @@ ALTER TABLE Empleado
     REFERENCES Empleado (Dni)
     ON DELETE NO ACTION
 GO
-
 
 SELECT TABLE_NAME 
 FROM [Empresa].INFORMATION_SCHEMA.TABLES 
@@ -189,8 +189,6 @@ GO
 ALTER TABLE Usuarios
 ADD CONSTRAINT PK_Usuario PRIMARY KEY (usuario);
 
-INSERT INTO usuarios (usuario,password) VALUES ('Admin','admin')
-
 CREATE TRIGGER TR_Eliminacion_SuperDni
 ON [dbo].[Empleado] FOR DELETE
 AS
@@ -214,13 +212,11 @@ SELECT D.NombreDpto,D.NumeroDpto,D.DniDirector,D.FechaIngresoDirector,L.Ubicacio
 
 DROP VIEW IF EXISTS grafica_view
 GO
-
 CREATE VIEW grafica_view 
 as
 SELECT UbicacionDpto as Ubicacion,count(*) as Total_Empleados_Trabajando FROM Empleado,localizaciones_dpto where dno=NumeroDpto
 GROUP BY UbicacionDpto
 HAVING COUNT(*)>1
-
 
 
 

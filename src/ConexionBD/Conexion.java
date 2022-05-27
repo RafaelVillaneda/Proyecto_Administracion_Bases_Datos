@@ -83,6 +83,22 @@ public class Conexion {
 			e.printStackTrace();
 		}
     }
+    public boolean procedimiento2(String sql) throws SQLException {
+    	try {
+    		
+    		pstm = conexion.prepareStatement("EXEC [dbo].[sp_actualizarSuperDni] ?");
+    		pstm.setString(1, sql);
+			pstm.executeUpdate();
+			conexion.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			conexion.rollback();
+			return false;
+		}
+        
+    	
+    }
     
     public static boolean agregarRegistroEmpleado(Empleado empleado) {
         try {
