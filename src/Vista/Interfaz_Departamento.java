@@ -245,7 +245,7 @@ public class Interfaz_Departamento extends JFrame {
 				int borro=e.getKeyCode();
 				if(Character.isLetter(car)|| Character.isSpace(car)|| borro==KeyEvent.VK_BACK_SPACE){
 					if(combo_accion.getSelectedIndex()==2||combo_accion.getSelectedIndex()==3 || combo_accion.getSelectedIndex()==4) {
-						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NombreDpto LIKE '"+caja_nom_dep.getText()+"%'");
+						actualizarTabla("SELECT * FROM dept_vista WHERE NombreDpto LIKE '"+caja_nom_dep.getText()+"%'");
 					}
 				}else{
 				e.consume();
@@ -272,7 +272,7 @@ public class Interfaz_Departamento extends JFrame {
 				int borro=e.getKeyCode();
 				if(Character.isDigit(car)|| borro==KeyEvent.VK_BACK_SPACE){
 					if(combo_accion.getSelectedIndex()==2||combo_accion.getSelectedIndex()==3 || combo_accion.getSelectedIndex()==4) {
-						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE NumeroDpto LIKE '"+Caja_num_dep.getText()+"%'");
+						actualizarTabla("SELECT * FROM dept_vista WHERE NumeroDpto LIKE '"+Caja_num_dep.getText()+"%'");
 					}
 				}else{
 				e.consume();
@@ -299,7 +299,7 @@ public class Interfaz_Departamento extends JFrame {
 				int borro=e.getKeyCode();
 				if(Character.isDigit(car)|| borro==KeyEvent.VK_BACK_SPACE){
 					if(combo_accion.getSelectedIndex()==2||combo_accion.getSelectedIndex()==3 || combo_accion.getSelectedIndex()==4) {
-						actualizarTabla("SELECT * FROM Empresa.dbo.Departamento WHERE DniDirector LIKE '"+caja_dni_director.getText()+"%'");
+						actualizarTabla("SELECT * FROM dept_vista WHERE DniDirector LIKE '"+caja_dni_director.getText()+"%'");
 					}
 				}else{
 				e.consume();

@@ -10,6 +10,7 @@ import Modelo.Empleado;
 import Modelo.Localizaciones_Dpto;
 import Vista.InterfazEmpleado;
 import Vista.Interfaz_Departamento;
+import Vista.MenuPrincipal;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -62,7 +63,8 @@ public class main {
 		DepartamentoDAO DAO=new DepartamentoDAO();
 		DAO.insertarRegistro(dep);
 		*/
-		new Interfaz_Departamento().setVisible(true);
+		//new Interfaz_Departamento().setVisible(true);
+		new MenuPrincipal().setVisible(true);
 		Localizaciones_Dpto localizacion=new Localizaciones_Dpto(8,"San luis potosi");//Los dos campos son primarias
 		Localizaciones_Dpto_DAO dao=new Localizaciones_Dpto_DAO();
 		//dao.insertarRegistro(localizacion);
