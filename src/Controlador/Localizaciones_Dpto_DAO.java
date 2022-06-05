@@ -32,13 +32,14 @@ Conexion cn = new Conexion(2);
 		}
 		return resultado;
 	}
-	public boolean ActualizarRegistro(Localizaciones_Dpto loc) {
+	public boolean ActualizarRegistro(Localizaciones_Dpto loc,String nuevo) {
     	cn.getConexion();
         boolean resultado = false;
-        
+        System.out.println(loc);
+        System.out.println(nuevo);
         //System.out.println("Insersion?--> "+Conexion.agregarRegistroEmpleado(empleado));
         try {
-			resultado = cn.actualizarRegistroDepartamentoLoc(loc);
+			resultado = cn.actualizarRegistroDepartamentoLoc(loc,nuevo);
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

@@ -60,7 +60,8 @@ public class Interfaz_Departamento extends JFrame {
 	private JComboBox combo_accion;
 	private JTextField caja_ubicacion;
 	private JLabel lblNewLabel_1;
-	
+	private String viejaLoc;
+	private JTextField caja_ubi_nueva;
 
 	/**
 	 * Launch the application.
@@ -106,7 +107,7 @@ public class Interfaz_Departamento extends JFrame {
 					combo_años.setSelectedItem(""+fecha[0]);
 					
 					caja_ubicacion.setText("" + table.getValueAt(table.getSelectedRow(), 4));
-					
+					viejaLoc="" + table.getValueAt(table.getSelectedRow(), 4);
 					
 					}
 			}
@@ -126,6 +127,7 @@ public class Interfaz_Departamento extends JFrame {
 					Caja_num_dep.setEnabled(false);
 					caja_dni_director.setEnabled(false);
 					caja_ubicacion.setEnabled(false);
+					caja_ubi_nueva.setEnabled(false);
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(false);
 					btn_modificar.setEnabled(false);
@@ -139,6 +141,7 @@ public class Interfaz_Departamento extends JFrame {
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
 					caja_ubicacion.setEnabled(true);
+					caja_ubi_nueva.setEnabled(false);
 					btn_agregar.setEnabled(true);
 					btn_eliminar.setEnabled(false);
 					btn_modificar.setEnabled(false);
@@ -152,6 +155,7 @@ public class Interfaz_Departamento extends JFrame {
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
 					caja_ubicacion.setEnabled(true);
+					caja_ubi_nueva.setEnabled(false);
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(true);
 					btn_modificar.setEnabled(false);
@@ -164,7 +168,8 @@ public class Interfaz_Departamento extends JFrame {
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(false);
 					caja_dni_director.setEnabled(true);
-					caja_ubicacion.setEnabled(true);
+					caja_ubicacion.setEnabled(false);
+					caja_ubi_nueva.setEnabled(true);
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(false);
 					btn_modificar.setEnabled(true);
@@ -177,6 +182,7 @@ public class Interfaz_Departamento extends JFrame {
 					caja_nom_dep.setEnabled(true);
 					Caja_num_dep.setEnabled(true);
 					caja_dni_director.setEnabled(true);
+					caja_ubi_nueva.setEnabled(false);
 					caja_ubicacion.setEnabled(true);
 					btn_agregar.setEnabled(false);
 					btn_eliminar.setEnabled(false);
@@ -198,7 +204,7 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNumeroDelDepartamento = new JLabel("Numero del departamento");
-		lblNumeroDelDepartamento.setBounds(10, 121, 142, 14);
+		lblNumeroDelDepartamento.setBounds(10, 121, 194, 14);
 		contentPane.add(lblNumeroDelDepartamento);
 		
 		JLabel lblDniDelDirector = new JLabel("Dni del director");
@@ -412,7 +418,8 @@ public class Interfaz_Departamento extends JFrame {
 				fecha+=combo_años.getSelectedItem().toString()+"-";
 				fecha+=combo_meses.getSelectedItem().toString()+"-";
 				fecha+=combo_dias.getSelectedItem().toString();
-				daoLoc.ActualizarRegistro(new Localizaciones_Dpto(Integer.parseInt(Caja_num_dep.getText()),caja_ubicacion.getText()));
+				
+				daoLoc.ActualizarRegistro(new Localizaciones_Dpto(Integer.parseInt(Caja_num_dep.getText()),caja_ubicacion.getText()),caja_ubi_nueva.getText());
 				if(dao.ActualizarRegistro(new Departamento(caja_nom_dep.getText(), Integer.parseInt(Caja_num_dep.getText()), caja_dni_director.getText(), fecha))) {
 					JOptionPane.showMessageDialog(null,"Se actualizo correctamente el Departamento");
 					actualizarTabla("SELECT * FROM dept_vista");
@@ -445,6 +452,16 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(lblNewLabel_1);
 		ImageIcon iconito3=new ImageIcon(InterfazEmpleado.class.getResource("/Vista/RecursosVisuales/dep.png"));
 		lblNewLabel_1.setIcon(resizeIcon(iconito3,lblNewLabel_1));
+		
+		JLabel lblUbicacinNueva = new JLabel("Ubicaci\u00F3n nueva");
+		lblUbicacinNueva.setBounds(185, 108, 154, 14);
+		contentPane.add(lblUbicacinNueva);
+		
+		caja_ubi_nueva = new JTextField();
+		caja_ubi_nueva.setEnabled(false);
+		caja_ubi_nueva.setColumns(10);
+		caja_ubi_nueva.setBounds(185, 121, 127, 20);
+		contentPane.add(caja_ubi_nueva);
 	}
 	public void actualizarTabla(String consulta) {
 		String controlador = "com.microsoft.sqlserver.jdbc.SQLServerDriver";

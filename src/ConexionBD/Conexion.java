@@ -163,11 +163,12 @@ public class Conexion {
 		}
     	return false;
     }
-    public static boolean actualizarRegistroDepartamentoLoc(Localizaciones_Dpto loc) throws SQLException {
+    public static boolean actualizarRegistroDepartamentoLoc(Localizaciones_Dpto loc,String nuevaLoc) throws SQLException {
     	try {
-			pstm = conexion.prepareStatement("UPDATE localizaciones_dpto SET UbicacionDpto=? WHERE NumeroDpto =?");
-			pstm.setString(1, loc.getLocalizacionDpto());
+			pstm = conexion.prepareStatement("UPDATE localizaciones_dpto SET UbicacionDpto=? WHERE (NumeroDpto =?) AND (UbicacionDpto=?)");
+			pstm.setString(1, nuevaLoc);
 	        pstm.setInt(2, loc.getNumeroDpto());
+	        pstm.setString(3, loc.getLocalizacionDpto());
 	     
 	        pstm.executeUpdate();
             conexion.commit();
