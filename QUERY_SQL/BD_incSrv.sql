@@ -56,40 +56,12 @@ FROM [Empresa].INFORMATION_SCHEMA.TABLES
 WHERE TABLE_TYPE = 'BASE TABLE'
 GO
 
-CREATE TABLE Proyecto(NombreProyecto VARCHAR(20), NumProyecto INT PRIMARY KEY, UbicacionProyecto VARCHAR(20), NumDptoProyecto INT)
-GO
-
-ALTER TABLE Proyecto
-   ADD CONSTRAINT fk_Pyt_NumYLoc
-    FOREIGN KEY (NumDptoProyecto,UbicacionProyecto)
-    REFERENCES localizaciones_dpto (NumeroDpto,UbicacionDpto)
-    ON DELETE NO ACTION
-GO
 
 SELECT TABLE_NAME 
 FROM [Empresa].INFORMATION_SCHEMA.TABLES 
 WHERE TABLE_TYPE = 'BASE TABLE'
 GO
 
-CREATE TABLE trabaja_en(DniEmpleado VARCHAR(20) NOT NULL, NumProyecto INT, Horas DECIMAL(5,2))
-GO
-
-ALTER TABLE trabaja_en
-   ADD CONSTRAINT fk_Tre_Dni
-    FOREIGN KEY (DniEmpleado)
-    REFERENCES Empleado (Dni)
-    ON DELETE CASCADE
-GO
-
-CREATE TABLE Subordinado(DniEmpleado VARCHAR(20), NombSubordinado VARCHAR(20), Sexo CHAR, FechaNac DATE, Relacion VARCHAR(20), PRIMARY KEY(DniEmpleado,NombSubordinado))
-GO
-
-ALTER TABLE Subordinado
-   ADD CONSTRAINT fk_Sbd_DniEmpleado
-    FOREIGN KEY (DniEmpleado)
-    REFERENCES Empleado (Dni)
-    ON DELETE CASCADE
-GO
 
 INSERT INTO Empleado(Nombre, Apellido1, Apellido2, Dni, FechaNac, Direccion, Sexo, Sueldo) VALUES
 ('Jose','Perez','Perez',123456789,'1965-09-01','Eloy I, 98','H',30000),
@@ -132,54 +104,6 @@ GO
 UPDATE Empleado SET Dno=5 WHERE Dni=123456789 OR Dni=333445555 OR Dni=666884444 OR Dni=453453453
 GO
 
-INSERT INTO Proyecto VALUES
-('ProductoX',1,'Valencia',5),
-('ProductoY',2,'Sevilla',5),
-('ProductoZ',3,'Madrid',5),
-('Computación',10,'Gijón',4),
-('Reorganización',20,'Madrid',1),
-('Comunicaciones',30,'Gijón',4)
-GO
-
-INSERT INTO trabaja_en VALUES
-('123456789',1,32.5),
-('123456789',2,7.5),
-('333445555',2,10),
-('333445555',3,10),
-('333445555',10,10),
-('333445555',20,10),
-('453453453',1,20),
-('453453453',2,20),
-('666884444',3,40),
-('888665555',20,NULL),
-('987654321',20,15),
-('987654321',30,20),
-('987987987',10,35),
-('987987987',30,5),
-('999887777',10,10),
-('999887777',30,30)
-GO
-
-INSERT INTO Subordinado VALUES
-('123456789','Alicia','M','1988-12-30','Hija'),
-('123456789','Elisa','M','1967-05-05','Esposa'),
-('123456789','Miguel','H','1988-01-04','Hijo'),
-('333445555','Alicia','M','1986-04-05','Hija'),
-('333445555','Luisa','M','1958-05-03','Esposa'),
-('333445555','Teodoro','H','1983-10-25','Hijo'),
-('987654321','Alfonso','H','1942-02-28','Esposo')
-GO
-
-SELECT Nombre, Apellido1, Apellido2, Sueldo, Horas FROM Empleado E JOIN trabaja_en T ON E.Dni=T.DniEmpleado;
-GO
-SELECT Nombre, Apellido1, Apellido2, NombSubordinado FROM Empleado E JOIN Subordinado S ON E.Dni=S.DniEmpleado WHERE Relacion!='';
-GO
-SELECT NombreProyecto, UbicacionProyecto FROM Proyecto;
-GO
-SELECT Nombre, NumProyecto FROM Empleado E JOIN trabaja_en T ON E.Dni=T.DniEmpleado;
-GO
-SELECT E.Nombre AS Empleado, P.Nombre AS Patron FROM Empleado E JOIN Empleado P ON E.SuperDni=P.Dni;
-GO
 
 
 CREATE TABLE Usuarios(
@@ -190,10 +114,9 @@ GO
 
 ALTER TABLE Usuarios
 ADD CONSTRAINT PK_Usuario PRIMARY KEY (usuario);
-
+GO
 INSERT INTO usuarios (usuario,password) VALUES ('Admin','admin')
-
-
+go
 
 
 
