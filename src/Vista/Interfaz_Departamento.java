@@ -417,6 +417,8 @@ public class Interfaz_Departamento extends JFrame {
 					JOptionPane.showMessageDialog(null,"Se actualizo correctamente el Departamento");
 					actualizarTabla("SELECT * FROM dept_vista");
 					//actualizarTabla2("SELECT * FROM localizaciones_dpto");
+					}else {
+						JOptionPane.showMessageDialog(null,"No se logro actualizar el Departamento");
 					}
 				}else {
 					JOptionPane.showMessageDialog(null,"Hay camnpos vacios");

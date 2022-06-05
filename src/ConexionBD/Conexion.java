@@ -99,7 +99,23 @@ public class Conexion {
         
     	
     }
-    
+    //
+    public boolean eliminacionEmpleadoConDepartamento(String dniDirector) throws SQLException {
+    	try {
+    		
+    		pstm = conexion.prepareStatement("UPDATE dbo.Departamento SET DniDirector =null WHERE DniDirector=?");
+    		pstm.setString(1, dniDirector);
+			pstm.executeUpdate();
+			conexion.commit();
+			return true;
+		} catch (SQLException e) {
+			e.printStackTrace();
+			conexion.rollback();
+			return false;
+		}
+        
+    	
+    }
     public static boolean agregarRegistroEmpleado(Empleado empleado) {
         try {
             pstm = conexion.prepareStatement("INSERT \"Empleado\" (\"Nombre\",\"Apellido1\",\"Apellido2\",\"Dni\",\"FechaNac\",\"Direccion\",\"Sexo\",\"Sueldo\","
@@ -122,12 +138,10 @@ public class Conexion {
             conexion.commit();
             return true;
         } catch (Exception ex) {
-        	ex.printStackTrace();
+        	//ex.printStackTrace();
         	try {
 				conexion.rollback();
 			} catch (SQLException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
         }
         return false;
@@ -145,7 +159,7 @@ public class Conexion {
             return true;
 		} catch (SQLException e) {
 			conexion.rollback();
-			e.printStackTrace();
+			//e.printStackTrace();
 		}
     	return false;
     }

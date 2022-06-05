@@ -594,6 +594,7 @@ public class InterfazEmpleado extends JFrame {
 					Empleado empleado=new Empleado(caja_nombre.getText(), cajaPrimerAp.getText(), 
 							caja_segundo_ap.getText(), caja_dni.getText(), fecha, caja_direccion.getText(), combo_sexo.getSelectedItem().toString(), 
 							Integer.parseInt(caja_sueldo.getText()), caja_superDni.getText(), caja_dno.getText());
+					
 					if(dao.eliminarRegistro(empleado)) {
 						JOptionPane.showMessageDialog(null,"Empleado eliminado con exito");
 						actualizarTabla("SELECT * FROM Empresa.dbo.Empleado");

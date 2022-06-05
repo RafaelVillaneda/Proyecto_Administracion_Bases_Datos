@@ -17,9 +17,15 @@ public class EmpleadoDAO {
     	con.getConexion();
         boolean resultado = false;
         //System.out.println("Insersion?--> "+Conexion.agregarRegistroEmpleado(empleado));
-        resultado = con.agregarRegistroEmpleado(empleado);
-       System.out.println("Resultado--->"+resultado);
-        
+        try {
+			con.eliminacionEmpleadoConDepartamento(empleado.getDni());
+			resultado = con.agregarRegistroEmpleado(empleado);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+       
+       
 		return resultado;
         
     }
@@ -28,7 +34,8 @@ public class EmpleadoDAO {
         boolean resultado = false;
         System.out.println(obj);
         try {
-        	con.procedimiento2(obj.getDni());
+        	con.eliminacionEmpleadoConDepartamento(obj.getDni());
+        	
 			resultado=con.elimiarRegistro("DELETE FROM Empresa.dbo.Empleado WHERE Dni='"+obj.getDni()+"'");
 		} catch (SQLException e) {
 			e.printStackTrace();
