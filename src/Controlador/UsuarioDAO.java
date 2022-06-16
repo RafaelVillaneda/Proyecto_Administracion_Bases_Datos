@@ -46,7 +46,8 @@ public class UsuarioDAO {
     	cn.getConexion();
         boolean resultado = false;
         try {
-			resultado=cn.elimiarRegistro("DELETE FROM Empresa.dbo.Usuarios WHERE Usuario='"+u.getUsuario()+"'");
+			resultado=cn.elimiarRegistro("DELETE FROM Empresa.dbo.Usuarios WHERE usuario='"+u.getUsuario()+"'");
+			return true;
 		} catch (SQLException e) {
 			e.printStackTrace();
 			resultado=false;

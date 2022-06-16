@@ -181,8 +181,8 @@ public class Interfaz_Usuario extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Usuario usu=new Usuario(caja_usuario.getText(),"");
 				System.out.println(usu.getUsuario());
-				if(!usu.getUsuario().equals("rafael") && DAO.eliminarRegistro(usu)==true) {
-					if(DAO.buscarRegistro(caja_usuario.getText())!=null) {
+				if(!usu.getUsuario().equals("rafael") && DAO.buscarRegistro(caja_usuario.getText())!=null) {
+					if(DAO.eliminarRegistro(usu)==true) {
 						JOptionPane.showMessageDialog(null,"Usuario Eliminado correctamente");
 					}else {
 						JOptionPane.showMessageDialog(null,"No existe el usuario que deseas eliminar");
