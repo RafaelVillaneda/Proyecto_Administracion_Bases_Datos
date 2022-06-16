@@ -35,6 +35,7 @@ public class EmpleadoDAO {
         System.out.println(obj);
         try {
         	con.eliminacionEmpleadoConDepartamento(obj.getDni());
+        	con.eliminacionEmpleadoJefe(obj.getDni());
         	
 			resultado=con.elimiarRegistro("DELETE FROM Empresa.dbo.Empleado WHERE Dni='"+obj.getDni()+"'");
 		} catch (SQLException e) {

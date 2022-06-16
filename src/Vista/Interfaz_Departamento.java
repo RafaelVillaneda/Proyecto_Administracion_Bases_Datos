@@ -331,6 +331,7 @@ public class Interfaz_Departamento extends JFrame {
 				caja_dni_director.setText("");
 				caja_nom_dep.setText("");
 				Caja_num_dep.setText("");
+				caja_ubi_nueva.setText("");
 				caja_ubicacion.setText("");
 				combo_años.setSelectedIndex(0);
 				combo_meses.setSelectedIndex(0);
@@ -445,6 +446,28 @@ public class Interfaz_Departamento extends JFrame {
 		caja_ubicacion.setEnabled(false);
 		caja_ubicacion.setColumns(10);
 		caja_ubicacion.setBounds(185, 81, 127, 20);
+		caja_ubicacion.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isLetter(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(combo_accion.getSelectedIndex()==2||combo_accion.getSelectedIndex()==3 || combo_accion.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM dept_vista WHERE UbicacionDpto LIKE '"+caja_ubicacion.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isLetter(car)|| Character.isSpace(car)){}else{
+				e.consume();
+				}
+				
+			}
+		});
 		contentPane.add(caja_ubicacion);
 		
 		lblNewLabel_1 = new JLabel("");
@@ -458,9 +481,32 @@ public class Interfaz_Departamento extends JFrame {
 		contentPane.add(lblUbicacinNueva);
 		
 		caja_ubi_nueva = new JTextField();
+		
 		caja_ubi_nueva.setEnabled(false);
 		caja_ubi_nueva.setColumns(10);
 		caja_ubi_nueva.setBounds(185, 121, 127, 20);
+		caja_ubi_nueva.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyReleased(KeyEvent e) {
+				char car = e.getKeyChar();
+				int borro=e.getKeyCode();
+				if(Character.isLetter(car)|| borro==KeyEvent.VK_BACK_SPACE){
+					if(combo_accion.getSelectedIndex()==2||combo_accion.getSelectedIndex()==3 || combo_accion.getSelectedIndex()==4) {
+						actualizarTabla("SELECT * FROM dept_vista WHERE UbicacionDpto LIKE '"+caja_dni_director.getText()+"%'");
+					}
+				}else{
+				e.consume();
+				}
+			}
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char car = e.getKeyChar();
+				if(Character.isLetter(car)|| Character.isSpace(car)){}else{
+				e.consume();
+				}
+				
+			}
+		});
 		contentPane.add(caja_ubi_nueva);
 	}
 	public void actualizarTabla(String consulta) {
@@ -494,9 +540,16 @@ public class Interfaz_Departamento extends JFrame {
 	    return new ImageIcon(resizedImage);
 	}
 	public boolean verificar_cajasVacias() {
-		if(caja_nom_dep.getText().isEmpty()||Caja_num_dep.getText().isEmpty()||caja_dni_director.getText().isEmpty()||caja_ubicacion.getText().isEmpty()) {
-			return true;
+		if(combo_accion.getSelectedIndex()==3) {
+			if(caja_nom_dep.getText().isEmpty()||Caja_num_dep.getText().isEmpty()||caja_dni_director.getText().isEmpty()||caja_ubi_nueva.getText().isEmpty()) {
+				return true;
+			}
+		}else if(combo_accion.getSelectedIndex()!=3) {
+			if(caja_nom_dep.getText().isEmpty()||Caja_num_dep.getText().isEmpty()||caja_dni_director.getText().isEmpty()||caja_ubicacion.getText().isEmpty()) {
+				return true;
+			}
 		}
+		
 		return false;
 	}
 }
